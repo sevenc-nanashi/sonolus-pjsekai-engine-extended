@@ -81,4 +81,9 @@ export const archetypes = defineArchetypes({
         script: scripts.fuzzyFlickIndex,
         input: true,
     },
+
+    damageNote: {
+        script: scripts.damageNoteIndex,
+        input: true,
+    },
 })

@@ -60,6 +60,10 @@ export class NoteDataPointer extends Pointer {
         return this.to<number>(4)
     }
 
+    public get isDamage() {
+        return this.to<boolean>(5)
+    }
+
     public get headSharedMemory() {
         return NoteSharedMemory.of(this.headIndex)
     }

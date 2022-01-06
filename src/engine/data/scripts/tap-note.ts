@@ -5,6 +5,7 @@ import {
     Equal,
     Greater,
     GreaterOr,
+    If,
     InputAccuracy,
     InputBucket,
     InputBucketValue,
@@ -48,20 +49,25 @@ import {
     calculateNoteLayout,
     getNoteLayout,
     noteCyanSprite,
+    noteRedSprite,
     noteYellowSprite,
 } from './common/note-sprite'
 import { playCriticalTapJudgmentSFX, playTapJudgmentSFX } from './common/sfx'
 import { checkTouchYInHitbox } from './common/touch'
 import { disallowEmpties, disallowEnds, disallowStart } from './input'
 
-export function tapNote(isCritical: boolean): Script {
+export function tapNote(isCritical: boolean, isDamage: boolean): Script {
     const bucket = isCritical
         ? buckets.criticalTapNoteIndex
         : buckets.tapNoteIndex
     const window = isCritical
         ? windows.tapNote.critical
         : windows.tapNote.normal
-    const noteSprite = isCritical ? noteYellowSprite : noteCyanSprite
+    const noteSprite = isDamage
+        ? noteRedSprite
+        : isCritical
+        ? noteYellowSprite
+        : noteCyanSprite
 
     const noteLayout = getNoteLayout(EntityMemory.to(0))
 
@@ -90,7 +96,10 @@ export function tapNote(isCritical: boolean): Script {
     )
 
     const updateParallel = Or(
-        And(options.isAutoplay, GreaterOr(Time, NoteData.time)),
+        And(
+            Or(options.isAutoplay, NoteData.isDamage),
+            GreaterOr(Time, NoteData.time)
+        ),
         Equal(noteInputState, InputState.Terminated),
         Greater(Subtract(Time, NoteData.time, InputOffset), window.good.late),
         [
@@ -100,7 +109,13 @@ export function tapNote(isCritical: boolean): Script {
         ]
     )
 
-    const terminate = And(options.isAutoplay, playVisualEffects())
+    const terminate = [
+        And(Or(options.isAutoplay, NoteData.isDamage), playVisualEffects()),
+        And(NoteData.isDamage, Not(bool(noteInputState)), [
+            InputJudgment.set(1),
+            playTapJudgmentSFX(),
+        ]),
+    ]
 
     return {
         preprocess: {
@@ -132,16 +147,20 @@ export function tapNote(isCritical: boolean): Script {
             disallowEmpties.add(TouchId),
             disallowEnds.add(TouchId),
             noteInputState.set(InputState.Terminated),
-
             InputJudgment.set(
-                window.judge(Subtract(TouchST, InputOffset), NoteData.time)
+                If(
+                    NoteData.isDamage,
+                    0,
+                    window.judge(Subtract(TouchST, InputOffset), NoteData.time)
+                )
             ),
             InputAccuracy.set(Subtract(TouchST, InputOffset, NoteData.time)),
             InputBucket.set(bucket),
             InputBucketValue.set(Multiply(InputAccuracy, 1000)),
-
             playVisualEffects(),
-            isCritical ? playCriticalTapJudgmentSFX() : playTapJudgmentSFX(),
+            And(isDamage, playTapJudgmentSFX()),
+            And(isCritical, playCriticalTapJudgmentSFX()),
+            And(Not(isDamage), Not(isCritical), playTapJudgmentSFX()),
         ]
     }
 
@@ -151,14 +170,19 @@ export function tapNote(isCritical: boolean): Script {
             playNoteEffect(
                 isCritical
                     ? ParticleEffect.NoteCircularTapYellow
+                    : isDamage
+                    ? ParticleEffect.NoteCircularTapRed
                     : ParticleEffect.NoteCircularTapCyan,
                 isCritical
                     ? ParticleEffect.NoteLinearTapYellow
+                    : isDamage
+                    ? ParticleEffect.NoteLinearTapRed
                     : ParticleEffect.NoteLinearTapCyan,
                 0,
                 'normal'
             ),
-            playSlotEffect(isCritical ? 4 : 6),
+            /* 1:Red 4: Yellow 6: Cyan*/
+            playSlotEffect(isCritical ? 4 : isDamage ? 1 : 6),
         ]
     }
 }

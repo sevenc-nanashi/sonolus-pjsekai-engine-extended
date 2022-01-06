@@ -41,14 +41,15 @@ export function fromSus(
         criticalSlideEndIndex: number
         criticalSlideEndFlickIndex: number
         criticalSlideConnectorIndex: number
-
         slideHiddenTickIndex: number
+        damageNoteIndex: number
     }
 ): LevelData {
     const score = analyze(sus, ticksPerBeat)
 
     const flickMods = new Map<string, -1 | 0 | 1>()
     const criticalMods = new Set<string>()
+    const damageMods = new Set<string>()
     const tickRemoveMods = new Set<string>()
     const easeInMods = new Set<string>()
     const easeOutMods = new Set<string>()
@@ -98,6 +99,9 @@ export function fromSus(
             case 3:
                 tickRemoveMods.add(key)
                 break
+            case 4:
+                damageMods.add(key)
+                break
         }
     })
 
@@ -134,18 +138,22 @@ export function fromSus(
 
             const time = toTime(note.tick)
             switch (note.type) {
-                case 1: {
+                case 1:
+                case 4: {
                     if (taps.has(key)) break
                     taps.add(key)
 
                     const flickMod = flickMods.get(key)
+                    const damageMod = damageMods.has(key)
                     wrappers.push({
                         group: 0,
                         time,
                         entity: {
                             archetype:
                                 flickMod === undefined
-                                    ? archetypes.tapNoteIndex
+                                    ? damageMod
+                                        ? archetypes.damageNoteIndex
+                                        : archetypes.tapNoteIndex
                                     : archetypes.flickNoteIndex,
                             data: {
                                 index: 0,
@@ -154,6 +162,8 @@ export function fromSus(
                                     note.lane - 8 + note.width / 2,
                                     note.width / 2,
                                     flickMod || 0,
+                                    0,
+                                    Number(damageMod),
                                 ],
                             },
                         },

@@ -21,7 +21,7 @@ export const scripts = defineScripts({
     stage,
     input,
 
-    tapNote: () => tapNote(false),
+    tapNote: () => tapNote(false, false),
     flickNote: () => flickNote(false),
     slideStart: () => slideStart(false),
     slideTick: () => slideTick(false),
@@ -29,7 +29,7 @@ export const scripts = defineScripts({
     slideEndFlick: () => slideEndFlick(false),
     slideConnector: () => slideConnector(false),
 
-    criticalTapNote: () => tapNote(true),
+    criticalTapNote: () => tapNote(true, false),
     criticalFlickNote: () => flickNote(true),
     criticalSlideStart: () => slideStart(true),
     criticalSlideTick: () => slideTick(true),
@@ -41,6 +41,8 @@ export const scripts = defineScripts({
 
     fuzzyNote: () => fuzzyNote(),
     fuzzyFlick: () => fuzzyFlick(),
+
+    damageNote: () => tapNote(false, true),
 
     autoSFX,
     simLine,

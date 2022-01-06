@@ -56,6 +56,13 @@ export function playTapJudgmentSFX() {
     )
 }
 
+// export function playDamageJudgmentSFX() {
+//     return And(
+//         options.isSFXEnabled,
+//         Play(Add(EffectClip.Miss, InputJudgment), minSFXDistance)
+//     )
+// }
+
 // export function playFizzyJudgmentSFX() {
 //     return And(
 //         options.isSFXEnabled,
