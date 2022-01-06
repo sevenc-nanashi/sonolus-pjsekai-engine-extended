@@ -4,6 +4,12 @@ type RawObject = {
     value: string
 }
 
+export type SpeedObject = {
+    measure: number
+    tick: number
+    speed: number
+}
+
 export type NoteObject = {
     tick: number
     lane: number
@@ -15,6 +21,7 @@ export type Score = {
     tapNotes: NoteObject[]
     directionalNotes: NoteObject[]
     slides: NoteObject[][]
+    speeds: SpeedObject[]
     toTime: (tick: number) => number
 }
 
@@ -83,6 +90,7 @@ export function analyze(sus: string, ticksPerBeat: number): Score {
 
     const bpms = new Map<string, number>()
     const bpmChangeObjects: RawObject[] = []
+    const speeds: SpeedObject[] = []
     const tapNotes: NoteObject[] = []
     const directionalNotes: NoteObject[] = []
     const streams = new Map<string, NoteObject[]>()
@@ -99,6 +107,12 @@ export function analyze(sus: string, ticksPerBeat: number): Score {
         // BPM Change
         if (header.length === 5 && header.endsWith('08')) {
             bpmChangeObjects.push(...toRawObjects(line, toTick))
+            return
+        }
+
+        // Speed Change
+        if (header.length === 5 && header.startsWith('TIL')) {
+            speeds.push(...toSpeedObjects(line))
             return
         }
 
@@ -159,8 +173,24 @@ export function analyze(sus: string, ticksPerBeat: number): Score {
         tapNotes,
         directionalNotes,
         slides,
+        speeds,
         toTime,
     }
+}
+
+function toSpeedObjects(line: Line): SpeedObject[] {
+    return line[1]
+        .split(',')
+        .map((value) => value.trim())
+        .map((value) => {
+            value = value.replace(/["]/g, '')
+            const keys = value.split("'")
+            return {
+                measure: Number(keys[0]),
+                tick: Number(keys[1].split(':')[0]),
+                speed: Number(keys[1].split(':')[1]),
+            }
+        })
 }
 
 function toSlides(stream: NoteObject[]) {
