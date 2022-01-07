@@ -128,6 +128,17 @@ export function fromSus(
                 archetype: archetypes.inputIndex,
             },
         },
+        {
+            group: 0,
+            time: 0,
+            entity: {
+                archetype: archetypes.speedChangeIndex,
+                data: {
+                    index: 0,
+                    values: [0, 1],
+                },
+            },
+        },
     ]
 
     const taps = new Set<string>()
