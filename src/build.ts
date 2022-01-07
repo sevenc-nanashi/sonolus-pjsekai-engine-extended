@@ -17,6 +17,8 @@ outputFileSync(
     buildOutput.engine.configuration.buffer
 )
 
+outputFileSync(`${distPath}/Level.gz`, buildOutput.level.data.buffer)
+
 outputFileSync(`${distPath}/EngineData`, buildOutput.engine.data.buffer)
 
 outputJsonSync(
