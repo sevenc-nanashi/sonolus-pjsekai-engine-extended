@@ -30,9 +30,16 @@ import { options } from '../../configuration/options'
 import { archetypes } from '../archetypes'
 import { buckets } from '../buckets'
 import { screen, stage, windows } from './common/constants'
+import { NoteSharedMemory } from './common/note'
 
 export function initialization(): Script {
-    const preprocess = [setupUI(), setupBuckets(), setupScore(), setupLife()]
+    const preprocess = [
+        setupUI(),
+        setupBuckets(),
+        setupScore(),
+        setupLife(),
+        NoteSharedMemory.noteSpeed.set(options.noteSpeed),
+    ]
 
     const spawnOrder = -1000
 

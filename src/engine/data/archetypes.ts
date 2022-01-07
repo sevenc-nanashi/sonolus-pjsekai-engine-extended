@@ -86,4 +86,8 @@ export const archetypes = defineArchetypes({
         script: scripts.damageNoteIndex,
         input: true,
     },
+
+    speedChange: {
+        script: scripts.speedChangeIndex,
+    },
 })
