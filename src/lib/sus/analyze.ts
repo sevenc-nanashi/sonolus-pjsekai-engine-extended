@@ -5,7 +5,6 @@ type RawObject = {
 }
 
 export type SpeedObject = {
-    measure: number
     tick: number
     speed: number
 }
@@ -112,7 +111,7 @@ export function analyze(sus: string, ticksPerBeat: number): Score {
 
         // Speed Change
         if (header.length === 5 && header.startsWith('TIL')) {
-            speeds.push(...toSpeedObjects(line))
+            speeds.push(...toSpeedObjects(line, toTick))
             return
         }
 
@@ -178,19 +177,23 @@ export function analyze(sus: string, ticksPerBeat: number): Score {
     }
 }
 
-function toSpeedObjects(line: Line): SpeedObject[] {
-    return line[1]
-        .split(',')
-        .map((value) => value.trim())
-        .map((value) => {
-            value = value.replace(/["]/g, '')
-            const keys = value.split("'")
-            return {
-                measure: Number(keys[0]),
-                tick: Number(keys[1].split(':')[0]),
-                speed: Number(keys[1].split(':')[1]),
-            }
+function toSpeedObjects(line: Line, toTick: ToTick): SpeedObject[] {
+    const pattern =
+        /(?<measure>\d)'(?<tick>\d{1,5}):(?<speed>\d{1,3}.\d{1,10})/gm
+    const matched = [...line[1].matchAll(pattern)]
+        .map((match) => {
+            return match.groups
         })
+        .filter((match) => {
+            return match !== undefined
+        }) as unknown as { measure: string; tick: string; speed: string }[]
+    const speeds = matched.map((match) => {
+        return {
+            tick: toTick(+match.measure, 0, 1) + +match.tick,
+            speed: +match.speed,
+        }
+    })
+    return speeds
 }
 
 function toSlides(stream: NoteObject[]) {
