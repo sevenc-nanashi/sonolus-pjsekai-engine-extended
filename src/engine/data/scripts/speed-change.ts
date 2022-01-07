@@ -1,11 +1,4 @@
-import {
-    bool,
-    EntityMemory,
-    GreaterOr,
-    Multiply,
-    Script,
-    Time,
-} from 'sonolus.js'
+import { bool, EntityMemory, GreaterOr, Script, Time } from 'sonolus.js'
 import {
     applyLevelSpeed,
     getSpawnTime,
@@ -13,7 +6,6 @@ import {
     noteSpawnTime,
     SpeedChangeData,
 } from './common/note'
-import { options } from '../../configuration/options'
 import { ConnectorData } from './slide-connector'
 
 export function speedChange(): Script {
@@ -27,16 +19,16 @@ export function speedChange(): Script {
                 NoteData.headSharedMemory.noteSpeed
             )
         ),
-        futureSpeed.set(Multiply(options.noteSpeed, SpeedChangeData.speed)),
+        futureSpeed.set(SpeedChangeData.speed),
     ]
 
     const spawnOrder = noteSpawnTime
 
     const shouldSpawn = GreaterOr(Time, noteSpawnTime)
 
-    const updateParallel = [
-        bool(NoteData.headSharedMemory.noteSpeed.set(futureSpeed)),
-        bool(ConnectorData.headSharedMemory.noteSpeed.set(futureSpeed)),
+    const updateSequential = [
+        NoteData.headSharedMemory.noteSpeed.set(futureSpeed),
+        ConnectorData.headSharedMemory.noteSpeed.set(futureSpeed),
         bool(1),
     ]
 
@@ -50,8 +42,8 @@ export function speedChange(): Script {
         shouldSpawn: {
             code: shouldSpawn,
         },
-        updateParallel: {
-            code: updateParallel,
+        updateSequential: {
+            code: updateSequential,
         },
     }
 }
