@@ -24,11 +24,12 @@ import {
     SwitchInteger,
     Time,
     TouchX,
+    UnlerpClamped,
 } from 'sonolus.js'
 import { scripts } from '..'
 import { options } from '../../../configuration/options'
 import { archetypes } from '../../archetypes'
-import { baseNote, lane, noteOnScreenDuration, origin } from './constants'
+import { baseNote, lane, origin } from './constants'
 import { checkTouchXInHitbox } from './touch'
 
 export enum InputState {
@@ -130,17 +131,42 @@ export function checkNoteTimeInEarlyWindow(earlyWindow: number) {
 
 // Note
 
-export function approach(x: Code<number>) {
-    return Power(1.06, Multiply(Subtract(x, 1), 45))
-}
-export function approachNote(time: Code<number>) {
-    return approach(
-        Subtract(1, Divide(Subtract(time, Time), noteOnScreenDuration))
+export function calculateNoteOnScreenDuration(
+    noteSpeedPointer: Pointer<number>
+) {
+    return Lerp(
+        0.35,
+        4,
+        Power(
+            UnlerpClamped(12, 1, Multiply(options.noteSpeed, noteSpeedPointer)),
+            1.31
+        )
     )
 }
 
-export function getSpawnTime(time: Code<number>) {
-    return Subtract(time, noteOnScreenDuration)
+export function approach(x: Code<number>) {
+    return Power(1.06, Multiply(Subtract(x, 1), 45))
+}
+export function approachNote(
+    time: Code<number>,
+    noteSpeedPointer: Pointer<number>
+) {
+    return approach(
+        Subtract(
+            1,
+            Divide(
+                Subtract(time, Time),
+                calculateNoteOnScreenDuration(noteSpeedPointer)
+            )
+        )
+    )
+}
+
+export function getSpawnTime(
+    time: Code<number>,
+    noteSpeedPointer: Pointer<number>
+) {
+    return Subtract(time, calculateNoteOnScreenDuration(noteSpeedPointer))
 }
 
 export function getZ(layer: number, time: Code<number>, center: Code<number>) {
@@ -188,7 +214,9 @@ export function preprocessNote(
         applyLevelSpeed(NoteData.time),
         applyMirrorCenters(NoteData.center),
 
-        noteSpawnTime.set(getSpawnTime(NoteData.time)),
+        noteSpawnTime.set(
+            getSpawnTime(NoteData.time, NoteData.headSharedMemory.noteSpeed)
+        ),
         noteZ.set(getZ(layer, NoteData.time, NoteData.center)),
         calculateHitbox(
             NoteData.center,
@@ -235,7 +263,9 @@ export function initializeNoteSimLine() {
 
 export function updateNoteY() {
     return [
-        noteScale.set(approachNote(NoteData.time)),
+        noteScale.set(
+            approachNote(NoteData.time, NoteData.headSharedMemory.noteSpeed)
+        ),
         noteBottom.set(Lerp(origin, baseNote.b, noteScale)),
         noteTop.set(Lerp(origin, baseNote.t, noteScale)),
     ]

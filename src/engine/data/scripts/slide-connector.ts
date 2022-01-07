@@ -40,7 +40,6 @@ import {
     lane,
     Layer,
     linearHoldEffect,
-    noteOnScreenDuration,
     origin,
 } from './common/constants'
 import {
@@ -48,6 +47,7 @@ import {
     applyMirrorCenters,
     approachNote,
     calculateHitbox,
+    calculateNoteOnScreenDuration,
     getSpawnTime,
     getZ,
     NoteSharedMemory,
@@ -106,7 +106,7 @@ class ConnectorDataPointer extends Pointer {
     }
 }
 
-const ConnectorData = createEntityData(ConnectorDataPointer)
+export const ConnectorData = createEntityData(ConnectorDataPointer)
 
 export function slideConnector(isCritical: boolean): Script {
     const connectionSprite = isCritical
@@ -144,7 +144,12 @@ export function slideConnector(isCritical: boolean): Script {
         applyLevelSpeed(ConnectorData.headTime, ConnectorData.tailTime),
         applyMirrorCenters(ConnectorData.headCenter, ConnectorData.tailCenter),
 
-        spawnTime.set(getSpawnTime(ConnectorData.headTime)),
+        spawnTime.set(
+            getSpawnTime(
+                ConnectorData.headTime,
+                ConnectorData.headSharedMemory.noteSpeed
+            )
+        ),
 
         headL.set(
             Multiply(
@@ -265,7 +270,15 @@ export function slideConnector(isCritical: boolean): Script {
     const updateParallel = Or(GreaterOr(Time, ConnectorData.tailTime), [
         vhTime.set(Max(ConnectorData.headTime, Time)),
         vtTime.set(
-            Min(ConnectorData.tailTime, Add(Time, noteOnScreenDuration))
+            Min(
+                ConnectorData.tailTime,
+                Add(
+                    Time,
+                    calculateNoteOnScreenDuration(
+                        ConnectorData.headSharedMemory.noteSpeed
+                    )
+                )
+            )
         ),
 
         [...Array(10).keys()].map((i) => [
@@ -290,8 +303,12 @@ export function slideConnector(isCritical: boolean): Script {
                     )
                 )
             ),
-            shYScale.set(approachNote(shTime)),
-            stYScale.set(approachNote(stTime)),
+            shYScale.set(
+                approachNote(shTime, ConnectorData.headSharedMemory.noteSpeed)
+            ),
+            stYScale.set(
+                approachNote(stTime, ConnectorData.headSharedMemory.noteSpeed)
+            ),
 
             connectorBottom.set(Lerp(origin, lane.b, shYScale)),
             connectorTop.set(Lerp(origin, lane.b, stYScale)),

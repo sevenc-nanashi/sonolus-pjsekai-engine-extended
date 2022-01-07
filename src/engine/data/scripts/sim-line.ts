@@ -62,7 +62,9 @@ export function simLine(): Script {
         Equal(EntityInfo.of(lIndex).state, State.Despawned),
         Equal(EntityInfo.of(rIndex).state, State.Despawned),
         [
-            lineScale.set(approachNote(time)),
+            lineScale.set(
+                approachNote(time, NoteData.headSharedMemory.noteSpeed)
+            ),
             lineB.set(Lerp(origin, baseNote.b, lineScale)),
             lineT.set(Lerp(origin, baseNote.t, lineScale)),
 
