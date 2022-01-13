@@ -23,17 +23,18 @@ import { rectByEdge } from './common/utils'
 
 export function simLine(): Script {
     const rIndex = EntityMemory.to<number>(0)
+    const speed = EntityMemory.to<number>(1)
     const lIndex = Subtract(rIndex, 1)
 
-    const time = EntityMemory.to<number>(1)
-    const isSlide = EntityMemory.to<boolean>(2)
+    const time = EntityMemory.to<number>(2)
+    const isSlide = EntityMemory.to<boolean>(3)
 
-    const lineL = EntityMemory.to<number>(3)
-    const lineR = EntityMemory.to<number>(4)
+    const lineL = EntityMemory.to<number>(4)
+    const lineR = EntityMemory.to<number>(5)
 
-    const lineScale = EntityMemory.to<number>(5)
-    const lineB = EntityMemory.to<number>(6)
-    const lineT = EntityMemory.to<number>(7)
+    const lineScale = EntityMemory.to<number>(6)
+    const lineB = EntityMemory.to<number>(7)
+    const lineT = EntityMemory.to<number>(8)
 
     const initialize = [
         time.set(NoteData.of(rIndex).time),
@@ -62,9 +63,7 @@ export function simLine(): Script {
         Equal(EntityInfo.of(lIndex).state, State.Despawned),
         Equal(EntityInfo.of(rIndex).state, State.Despawned),
         [
-            lineScale.set(
-                approachNote(time, NoteData.headSharedMemory.noteSpeed)
-            ),
+            lineScale.set(approachNote(time, speed)),
             lineB.set(Lerp(origin, baseNote.b, lineScale)),
             lineT.set(Lerp(origin, baseNote.t, lineScale)),
 

@@ -247,7 +247,7 @@ export function initializeNoteSimLine() {
             ].map((archetype) => [archetype, true]),
             false
         ),
-        Spawn(scripts.simLineIndex, [EntityInfo.index])
+        Spawn(scripts.simLineIndex, [EntityInfo.index, NoteData.speed])
     )
 }
 
