@@ -1,6 +1,6 @@
-# Sonolus PJSekai Engine
+# Sonolus PJSekai Engine Modified
 
-A recreation of Project Sekai: Colorful Stage! engine in [Sonolus](https://sonolus.com).
+A modifed Project Sekai: Colorful Stage! engine for [Sonolus](https://sonolus.com).
 
 ## Links
 
@@ -12,6 +12,16 @@ A recreation of Project Sekai: Colorful Stage! engine in [Sonolus](https://sonol
 ```
 npm install sonolus-pjsekai-engine --save
 ```
+
+## Mods
+
+- FUZZY note by [sevenc-nanashi](https://github.com/sevenc-nanashi)
+ - It looks notes but works like slider. (from dankagu)
+- DAMAGE note by [Dosugamea](https://github.com/Dosugamea)
+ - It looks notes but get MISS on tap, otherwise get PERFECT. (from chunithm)
+- HISPEED by [Dosugamea](https://github.com/Dosugamea)
+ - It multiply notes flowing speed on any timings when the chart author specifies. (from chunithm)
+
 
 ## Custom Resources
 
