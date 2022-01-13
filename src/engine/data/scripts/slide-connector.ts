@@ -149,10 +149,7 @@ export function slideConnector(isCritical: boolean): Script {
         applyMirrorCenters(ConnectorData.headCenter, ConnectorData.tailCenter),
 
         spawnTime.set(
-            getSpawnTime(
-                ConnectorData.headTime,
-                ConnectorData.headSharedMemory.noteSpeed
-            )
+            getSpawnTime(ConnectorData.headTime, ConnectorData.speed)
         ),
 
         headL.set(
@@ -276,12 +273,7 @@ export function slideConnector(isCritical: boolean): Script {
         vtTime.set(
             Min(
                 ConnectorData.tailTime,
-                Add(
-                    Time,
-                    calculateNoteOnScreenDuration(
-                        ConnectorData.headSharedMemory.noteSpeed
-                    )
-                )
+                Add(Time, calculateNoteOnScreenDuration(ConnectorData.speed))
             )
         ),
 
@@ -307,12 +299,8 @@ export function slideConnector(isCritical: boolean): Script {
                     )
                 )
             ),
-            shYScale.set(
-                approachNote(shTime, ConnectorData.headSharedMemory.noteSpeed)
-            ),
-            stYScale.set(
-                approachNote(stTime, ConnectorData.headSharedMemory.noteSpeed)
-            ),
+            shYScale.set(approachNote(shTime, ConnectorData.speed)),
+            stYScale.set(approachNote(stTime, ConnectorData.speed)),
 
             connectorBottom.set(Lerp(origin, lane.b, shYScale)),
             connectorTop.set(Lerp(origin, lane.b, stYScale)),
