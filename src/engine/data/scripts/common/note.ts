@@ -72,14 +72,6 @@ export class NoteDataPointer extends Pointer {
 
 export const NoteData = createEntityData(NoteDataPointer)
 
-export class SpeedChangePointer extends NoteDataPointer {
-    public get speed() {
-        return this.to<number>(1)
-    }
-}
-
-export const SpeedChangeData = createEntityData(SpeedChangePointer)
-
 // Shared Memory
 
 export class NoteSharedMemoryPointer extends Pointer {
@@ -93,10 +85,6 @@ export class NoteSharedMemoryPointer extends Pointer {
 
     public get slideHitboxR() {
         return this.to<number>(2)
-    }
-
-    public get noteSpeed() {
-        return this.to<number>(3)
     }
 }
 

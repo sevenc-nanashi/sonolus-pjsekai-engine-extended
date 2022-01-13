@@ -15,7 +15,6 @@ import { stage } from './stage'
 import { tapNote } from './tap-note'
 import { fuzzyNote } from './fuzzy-note'
 import { fuzzyFlick } from './fuzzy-flick'
-import { speedChange } from './speed-change'
 
 export const scripts = defineScripts({
     initialization,
@@ -44,8 +43,6 @@ export const scripts = defineScripts({
     fuzzyFlick: () => fuzzyFlick(),
 
     damageNote: () => tapNote(false, true),
-
-    speedChange: () => speedChange(),
 
     autoSFX,
     simLine,

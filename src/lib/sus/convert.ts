@@ -43,7 +43,6 @@ export function fromSus(
         criticalSlideConnectorIndex: number
         slideHiddenTickIndex: number
         damageNoteIndex: number
-        speedChangeIndex: number
     }
 ): LevelData {
     const score = analyze(sus, ticksPerBeat)
@@ -126,17 +125,6 @@ export function fromSus(
             time: -998,
             entity: {
                 archetype: archetypes.inputIndex,
-            },
-        },
-        {
-            group: 0,
-            time: 0,
-            entity: {
-                archetype: archetypes.speedChangeIndex,
-                data: {
-                    index: 0,
-                    values: [0, 1],
-                },
             },
         },
     ]
@@ -433,21 +421,6 @@ export function fromSus(
 
             head = newHead
             connectedNotes.length = 0
-        })
-    })
-
-    score.speeds.forEach((speed) => {
-        const time = toTime(speed.tick)
-        wrappers.push({
-            group: 0,
-            time: toTime(speed.tick),
-            entity: {
-                archetype: archetypes.speedChangeIndex,
-                data: {
-                    index: 0,
-                    values: [time, speed.speed],
-                },
-            },
         })
     })
 
