@@ -73,12 +73,20 @@ export const archetypes = defineArchetypes({
         input: true,
     },
 
-    fuzzyNote: {
-        script: scripts.fuzzyNoteIndex,
+    traceNote: {
+        script: scripts.traceNoteIndex,
         input: true,
     },
-    fuzzyFlick: {
-        script: scripts.fuzzyFlickIndex,
+    traceFlick: {
+        script: scripts.traceFlickIndex,
+        input: true,
+    },
+    criticalTraceNote: {
+        script: scripts.criticalTraceNoteIndex,
+        input: true,
+    },
+    criticalTraceFlick: {
+        script: scripts.criticalTraceFlickIndex,
         input: true,
     },
 

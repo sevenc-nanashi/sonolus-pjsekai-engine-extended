@@ -30,7 +30,11 @@ import {
 } from 'sonolus.js'
 import { options } from '../../configuration/options'
 import { buckets } from '../buckets'
-import { arrowRedSprite, getArrowLayout } from './common/arrow-sprite'
+import {
+    arrowRedSprite,
+    arrowYellowSprite,
+    getArrowLayout,
+} from './common/arrow-sprite'
 import { Layer, minFlickVR, windows } from './common/constants'
 import {
     playNoteEffect,
@@ -56,22 +60,35 @@ import {
 import {
     calculateNoteLayout,
     getNoteLayout,
-    noteFizzySprite,
+    noteTraceGraySprite,
+    noteTraceYellowSprite,
 } from './common/note-sprite'
 import { playFlickJudgmentSFX } from './common/sfx'
+import {
+    calculateTickLayout,
+    getTickLayout,
+    tickGraySprite,
+    tickYellowSprite,
+} from './common/tick-sprite'
 import {
     checkDirection,
     checkTouchXInHitbox,
     checkTouchYInHitbox,
 } from './common/touch'
 
-export function fuzzyFlick(): Script {
-    const bucket = buckets.fuzzyFlickIndex
-    const window = windows.slideEndFlick.normal
-    const noteSprite = noteFizzySprite
-    const arrowSprite = arrowRedSprite
+export function traceFlick(isCritical: boolean): Script {
+    const bucket = isCritical
+        ? buckets.criticalTraceFlickIndex
+        : buckets.traceFlickIndex
+    const window = isCritical
+        ? windows.slideEndFlick.critical
+        : windows.slideEndFlick.normal
+    const noteSprite = isCritical ? noteTraceYellowSprite : noteTraceGraySprite
+    const tickSprite = isCritical ? tickYellowSprite : tickGraySprite
+    const arrowSprite = isCritical ? arrowYellowSprite : arrowRedSprite
 
     const noteLayout = getNoteLayout(EntityMemory.to(0))
+    const tickLayout = getTickLayout(EntityMemory.to(0))
     const arrowLayout = getArrowLayout(EntityMemory.to(8))
     const arrowZ = EntityMemory.to<number>(17)
 
@@ -79,6 +96,7 @@ export function fuzzyFlick(): Script {
         preprocessNote(bucket, window.good.late, 0.75, Layer.NoteBody),
         applyMirrorDirections(NoteData.direction),
         calculateNoteLayout(NoteData.center, NoteData.width, noteLayout),
+        calculateTickLayout(NoteData.center, NoteData.width, tickLayout),
         arrowSprite.calculateLayout(
             NoteData.center,
             NoteData.width,
@@ -134,6 +152,7 @@ export function fuzzyFlick(): Script {
             updateNoteY(),
 
             noteSprite.draw(noteScale, noteBottom, noteTop, noteLayout, noteZ),
+            tickSprite.draw(noteScale, noteBottom, noteTop, tickLayout, noteZ),
             arrowSprite.draw(noteScale, arrowLayout, arrowZ),
         ]
     )

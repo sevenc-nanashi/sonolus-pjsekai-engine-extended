@@ -48,22 +48,39 @@ import {
 import {
     calculateNoteLayout,
     getNoteLayout,
-    noteFizzySprite,
+    noteTraceGraySprite,
+    noteTraceYellowSprite,
 } from './common/note-sprite'
-import { playTapJudgmentSFX } from './common/sfx'
+import {
+    calculateTickLayout,
+    getTickLayout,
+    tickGraySprite,
+    tickYellowSprite,
+} from './common/tick-sprite'
+import {
+    playCriticalTraceJudgmentSFX,
+    playTraceJudgmentSFX,
+} from './common/sfx'
 import { checkTouchYInHitbox } from './common/touch'
 import { disallowEmpties, disallowEnds, disallowStart } from './input'
 
-export function fuzzyNote(): Script {
-    const bucket = buckets.fuzzyNoteIndex
-    const window = windows.tapNote.normal
-    const noteSprite = noteFizzySprite
+export function traceNote(isCritical: boolean): Script {
+    const bucket = isCritical
+        ? buckets.criticalTraceNoteIndex
+        : buckets.traceNoteIndex
+    const window = isCritical
+        ? windows.tapNote.critical
+        : windows.tapNote.normal
+    const noteSprite = isCritical ? noteTraceYellowSprite : noteTraceGraySprite
+    const tickSprite = isCritical ? tickYellowSprite : tickGraySprite
 
     const noteLayout = getNoteLayout(EntityMemory.to(0))
+    const tickLayout = getTickLayout(EntityMemory.to(0))
 
     const preprocess = [
         preprocessNote(bucket, window.good.late, 0.625, Layer.NoteBody),
         calculateNoteLayout(NoteData.center, NoteData.width, noteLayout),
+        calculateTickLayout(NoteData.center, NoteData.width, tickLayout),
     ]
 
     const spawnOrder = noteSpawnTime
@@ -98,6 +115,7 @@ export function fuzzyNote(): Script {
             updateNoteY(),
 
             noteSprite.draw(noteScale, noteBottom, noteTop, noteLayout, noteZ),
+            tickSprite.draw(noteScale, noteBottom, noteTop, tickLayout, noteZ),
         ]
     )
 
@@ -151,7 +169,9 @@ export function fuzzyNote(): Script {
                 [InputJudgment.set(1), InputAccuracy.set(0)]
             ),
             playVisualEffects(),
-            playTapJudgmentSFX(),
+            isCritical
+                ? playCriticalTraceJudgmentSFX()
+                : playTraceJudgmentSFX(),
         ]
     }
 
@@ -159,12 +179,26 @@ export function fuzzyNote(): Script {
         return [
             playNoteLaneEffect(),
             playNoteEffect(
-                ParticleEffect.NoteCircularTapCyan,
-                ParticleEffect.NoteLinearTapCyan,
+                isCritical
+                    ? ParticleEffect.NoteCircularTapYellow
+                    : ParticleEffect.NoteCircularTapBase,
+                isCritical
+                    ? ParticleEffect.NoteLinearTapYellow
+                    : ParticleEffect.NoteLinearTapBase,
                 0,
                 'normal'
             ),
-            playSlotEffect(6),
+            // playNoteEffect(
+            //     isCritical
+            //         ? ParticleEffect.NoteCircularAlternativeYellow
+            //         : ParticleEffect.NoteCircularAlternativeBase,
+            //     isCritical
+            //         ? ParticleEffect.NoteLinearTapYellow
+            //         : ParticleEffect.NoteLinearTapBase,
+            //     0,
+            //     'tick'
+            // ),
+            playSlotEffect(isCritical ? 4 : 0),
         ]
     }
 }

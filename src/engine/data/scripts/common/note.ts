@@ -243,7 +243,7 @@ export function initializeNoteSimLine() {
                 archetypes.criticalSlideStartIndex,
                 archetypes.criticalSlideEndIndex,
                 archetypes.criticalSlideEndFlickIndex,
-                archetypes.fuzzyNoteIndex,
+                archetypes.traceNoteIndex,
             ].map((archetype) => [archetype, true]),
             false
         ),

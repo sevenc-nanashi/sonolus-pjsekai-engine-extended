@@ -42,6 +42,12 @@ export function fromSus(
         criticalSlideEndFlickIndex: number
         criticalSlideConnectorIndex: number
         slideHiddenTickIndex: number
+
+        traceNoteIndex: number
+        traceFlickIndex: number
+        criticalTraceNoteIndex: number
+        criticalTraceFlickIndex: number
+
         damageNoteIndex: number
     }
 ): LevelData {
@@ -51,6 +57,7 @@ export function fromSus(
     const criticalMods = new Set<string>()
     const damageMods = new Set<string>()
     const tickRemoveMods = new Set<string>()
+    const usedTickRemoveMods = new Set<string>()
     const easeInMods = new Set<string>()
     const easeOutMods = new Set<string>()
 
@@ -173,6 +180,7 @@ export function fromSus(
                 }
                 case 2: {
                     if (taps.has(key)) break
+                    if (tickRemoveMods.has(key)) break
                     taps.add(key)
 
                     const flickMod = flickMods.get(key)
@@ -301,6 +309,7 @@ export function fromSus(
                             time,
                             isCritical,
                         })
+                        usedTickRemoveMods.add(key)
                         break
                     }
 
@@ -440,6 +449,35 @@ export function fromSus(
 
             head = newHead
             connectedNotes.length = 0
+        })
+    })
+    score.tapNotes.forEach((note) => {
+        const key = getKey(note)
+        if (!tickRemoveMods.has(key) || usedTickRemoveMods.has(key)) return
+        const time = toTime(note.tick)
+        const flickMod = flickMods.get(key)
+
+        wrappers.push({
+            group: 0,
+            time,
+            entity: {
+                archetype: criticalMods.has(key)
+                    ? flickMod === undefined
+                        ? archetypes.criticalTraceNoteIndex
+                        : archetypes.criticalTraceFlickIndex
+                    : flickMod === undefined
+                    ? archetypes.traceNoteIndex
+                    : archetypes.traceFlickIndex,
+                data: {
+                    index: 0,
+                    values: [
+                        time,
+                        note.lane - 8 + note.width / 2,
+                        note.width / 2,
+                        flickMod || 0,
+                    ],
+                },
+            },
         })
     })
 

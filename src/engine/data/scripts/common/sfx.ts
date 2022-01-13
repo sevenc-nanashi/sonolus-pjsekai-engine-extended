@@ -56,19 +56,18 @@ export function playTapJudgmentSFX() {
     )
 }
 
-// export function playDamageJudgmentSFX() {
-//     return And(
-//         options.isSFXEnabled,
-//         Play(Add(EffectClip.Miss, InputJudgment), minSFXDistance)
-//     )
-// }
-
-// export function playFizzyJudgmentSFX() {
-//     return And(
-//         options.isSFXEnabled,
-//         Play(Add(EffectClip.Miss, InputJudgment), minSFXDistance)
-//     )
-// }
+export function playTraceJudgmentSFX() {
+    return And(
+        options.isSFXEnabled,
+        Play(getTickClip(InputJudgment), minSFXDistance)
+    )
+}
+export function playCriticalTraceJudgmentSFX() {
+    return And(
+        options.isSFXEnabled,
+        Play(getCriticalTickClip(InputJudgment), minSFXDistance)
+    )
+}
 
 export function playCriticalTapJudgmentSFX() {
     return And(
