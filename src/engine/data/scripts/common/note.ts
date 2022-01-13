@@ -206,9 +206,7 @@ export function preprocessNote(
         applyLevelSpeed(NoteData.time),
         applyMirrorCenters(NoteData.center),
 
-        noteSpawnTime.set(
-            getSpawnTime(NoteData.time, NoteData.headSharedMemory.noteSpeed)
-        ),
+        noteSpawnTime.set(getSpawnTime(NoteData.time, NoteData.speed)),
         noteZ.set(getZ(layer, NoteData.time, NoteData.center)),
         calculateHitbox(
             NoteData.center,
@@ -255,9 +253,7 @@ export function initializeNoteSimLine() {
 
 export function updateNoteY() {
     return [
-        noteScale.set(
-            approachNote(NoteData.time, NoteData.headSharedMemory.noteSpeed)
-        ),
+        noteScale.set(approachNote(NoteData.time, NoteData.speed)),
         noteBottom.set(Lerp(origin, baseNote.b, noteScale)),
         noteTop.set(Lerp(origin, baseNote.t, noteScale)),
     ]
