@@ -65,6 +65,10 @@ export class NoteDataPointer extends Pointer {
         return this.to<boolean>(5)
     }
 
+    public get speed() {
+        return this.to<number>(6)
+    }
+
     public get headSharedMemory() {
         return NoteSharedMemory.of(this.headIndex)
     }

@@ -97,6 +97,10 @@ class ConnectorDataPointer extends Pointer {
         return this.to<number>(7)
     }
 
+    public get speed() {
+        return this.to<number>(8)
+    }
+
     public get headInfo() {
         return EntityInfo.of(this.headIndex)
     }

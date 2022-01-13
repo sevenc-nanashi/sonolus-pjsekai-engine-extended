@@ -164,6 +164,7 @@ export function fromSus(
                                     flickMod || 0,
                                     0,
                                     Number(damageMod),
+                                    getSpeed(note.tick),
                                 ],
                             },
                         },
@@ -190,6 +191,9 @@ export function fromSus(
                                     note.lane - 8 + note.width / 2,
                                     note.width / 2,
                                     flickMod || 0,
+                                    0,
+                                    0,
+                                    getSpeed(note.tick),
                                 ],
                             },
                         },
@@ -236,6 +240,10 @@ export function fromSus(
                                     time,
                                     note.lane - 8 + note.width / 2,
                                     note.width / 2,
+                                    0,
+                                    0,
+                                    0,
+                                    getSpeed(note.tick),
                                 ],
                             },
                         },
@@ -270,6 +278,8 @@ export function fromSus(
                                     note.lane - 8 + note.width / 2,
                                     note.width / 2,
                                     flickMod || 0,
+                                    0,
+                                    getSpeed(note.tick),
                                 ],
                             },
                         },
@@ -307,6 +317,10 @@ export function fromSus(
                                     time,
                                     note.lane - 8 + note.width / 2,
                                     note.width / 2,
+                                    0,
+                                    0,
+                                    0,
+                                    getSpeed(note.tick),
                                 ],
                             },
                         },
@@ -364,6 +378,10 @@ export function fromSus(
                                 info.time,
                                 lane - 8 + width / 2,
                                 width / 2,
+                                0,
+                                0,
+                                0,
+                                getSpeed(note.tick),
                             ],
                         },
                     },
@@ -388,6 +406,7 @@ export function fromSus(
                             note.lane - 8 + note.width / 2,
                             note.width / 2,
                             easeType,
+                            getSpeed(note.tick),
                         ],
                     },
                 },
@@ -437,6 +456,16 @@ export function fromSus(
 
     function toTime(tick: number) {
         return score.toTime(tick) + offset
+    }
+
+    function getSpeed(tick: number) {
+        let currentSpeed = 1.0
+        for (const s of score.speeds) {
+            if (tick >= s.tick) {
+                currentSpeed = s.speed
+            }
+        }
+        return currentSpeed
     }
 }
 
