@@ -13,6 +13,22 @@ A modifed Project Sekai: Colorful Stage! engine for [Sonolus](https://sonolus.co
 npm install sonolus-pjsekai-engine --save
 ```
 
+## Build
+
+### Build an engine
+```
+npm run build
+(You'll see build result in dist folder)
+```
+
+### Convert a chart
+```
+(Put a chart file as `convert.sus` in the top level folder of this repository)
+npm run convert
+(You'll see build result in levelDist folder)
+```
+
+
 ## Mods
 
 - FUZZY note by [sevenc-nanashi](https://github.com/sevenc-nanashi)

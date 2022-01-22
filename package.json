@@ -15,7 +15,8 @@
   "scripts": {
     "lint": "tsc -p . --noEmit && eslint --ext .ts src/",
     "serve": "ts-node-dev --respawn --transpile-only ./src/serve",
-    "build": "ts-node ./src/build && tsc -p ./tsconfig.lib.json"
+    "build": "ts-node ./src/build && tsc -p ./tsconfig.lib.json",
+    "convert": "ts-node ./src/convert && tsc -p ./tsconfig.lib.json"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",

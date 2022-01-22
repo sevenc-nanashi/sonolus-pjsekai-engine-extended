@@ -1,3 +1,7 @@
 .vscode/
 node_modules/
 dist/
+levelDist/
+src/level/data/damage_ex.sus
+src/level/data/speed_ex.sus
+convert.sus
