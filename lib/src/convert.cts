@@ -325,7 +325,7 @@ const damage: Handler<USCDamageNote> = (object, append) => {
 
 const slide: Handler<USCSlideNote> = (object, append) => {
     type ConnectionIntermediate = Intermediate & {
-        ease?: 'out' | 'linear' | 'in'
+        ease?: 'outin' | 'out' | 'linear' | 'in' | 'inout'
     }
 
     const cis: ConnectionIntermediate[] = []
