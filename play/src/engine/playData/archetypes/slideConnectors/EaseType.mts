@@ -1,9 +1,9 @@
 export const EaseType = {
-    OutIn = -2,
-    Out = -1,
-    Linear = 0,
-    In = 1,
-    InOut = 2,
+    OutIn: -2,
+    Out: -1,
+    Linear: 0,
+    In: 1,
+    InOut: 2,
 } as const
 
 export type EaseType = (typeof EaseType)[keyof typeof EaseType]
