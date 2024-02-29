@@ -245,10 +245,13 @@ const directions = {
 } as const
 
 const eases = {
+    outin: -2,
     out: -1,
     linear: 0,
     in: 1,
+    inout: 2
 } as const
+
 const slideStarts = {
     tap: 0,
     trace: 1,
