@@ -1,4 +1,4 @@
-import { UnitText } from 'sonolus-core'
+import { Text } from 'sonolus-core'
 import { skin } from './skin.mjs'
 
 export const buckets = defineBuckets({
@@ -13,7 +13,7 @@ export const buckets = defineBuckets({
                 rotation: -90,
             },
         ],
-        unit: UnitText.Millisecond,
+        unit: Text.MillisecondUnit,
     },
     normalFlickNote: {
         sprites: [
@@ -34,7 +34,7 @@ export const buckets = defineBuckets({
                 rotation: -90,
             },
         ],
-        unit: UnitText.Millisecond,
+        unit: Text.MillisecondUnit,
     },
     normalSlideStartNote: {
         sprites: [
@@ -55,7 +55,7 @@ export const buckets = defineBuckets({
                 rotation: -90,
             },
         ],
-        unit: UnitText.Millisecond,
+        unit: Text.MillisecondUnit,
     },
     normalSlideEndNote: {
         sprites: [
@@ -76,7 +76,7 @@ export const buckets = defineBuckets({
                 rotation: -90,
             },
         ],
-        unit: UnitText.Millisecond,
+        unit: Text.MillisecondUnit,
     },
     normalSlideEndFlickNote: {
         sprites: [
@@ -105,7 +105,7 @@ export const buckets = defineBuckets({
                 rotation: -90,
             },
         ],
-        unit: UnitText.Millisecond,
+        unit: Text.MillisecondUnit,
     },
 
     criticalTapNote: {
@@ -119,7 +119,7 @@ export const buckets = defineBuckets({
                 rotation: -90,
             },
         ],
-        unit: UnitText.Millisecond,
+        unit: Text.MillisecondUnit,
     },
     criticalFlickNote: {
         sprites: [
@@ -140,7 +140,7 @@ export const buckets = defineBuckets({
                 rotation: -90,
             },
         ],
-        unit: UnitText.Millisecond,
+        unit: Text.MillisecondUnit,
     },
     criticalSlideStartNote: {
         sprites: [
@@ -161,7 +161,7 @@ export const buckets = defineBuckets({
                 rotation: -90,
             },
         ],
-        unit: UnitText.Millisecond,
+        unit: Text.MillisecondUnit,
     },
     criticalSlideEndNote: {
         sprites: [
@@ -182,7 +182,7 @@ export const buckets = defineBuckets({
                 rotation: -90,
             },
         ],
-        unit: UnitText.Millisecond,
+        unit: Text.MillisecondUnit,
     },
     criticalSlideEndFlickNote: {
         sprites: [
@@ -211,7 +211,7 @@ export const buckets = defineBuckets({
                 rotation: -90,
             },
         ],
-        unit: UnitText.Millisecond,
+        unit: Text.MillisecondUnit,
     },
     // Extended
     normalTraceNote: {
@@ -225,6 +225,6 @@ export const buckets = defineBuckets({
                 rotation: -90,
             },
         ],
-        unit: UnitText.Millisecond,
+        unit: Text.MillisecondUnit,
     },
 })

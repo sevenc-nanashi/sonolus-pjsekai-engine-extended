@@ -1,104 +1,123 @@
-import { options } from '~/engine/configuration/options.mjs'
-import {
-    canTraceStart,
-    claimStart,
-    disallowEmpty,
-    disallowTraceStart,
-} from '~/engine/playData/archetypes/InputManager.mjs'
+import { disallowEmpty } from '~/engine/playData/archetypes/InputManager.mjs'
 import { note } from '~/engine/playData/archetypes/constants.mjs'
 import { scaledScreen } from '~/engine/playData/archetypes/shared.mjs'
-import { perspectiveLayout } from '~/engine/playData/archetypes/utils.mjs'
-import { SlimNote } from '../SlimNote.mjs'
+import { layer } from '../../../layer.mjs'
+import { getZ } from '../../../utils.mjs'
+import { FlatNote } from '../FlatNote.mjs'
 
-export abstract class TraceNote extends SlimNote {
-    leniency = 1
+export abstract class TraceNote extends FlatNote {
+    abstract sprites: {
+        left: SkinSprite
+        middle: SkinSprite
+        right: SkinSprite
+        fallback: SkinSprite
+    }
+
     abstract tickSprites: {
         tick: SkinSprite
         fallback: SkinSprite
     }
-    tickSpriteLayout = this.entityMemory(Quad)
+
+    leniency = 1
+
+    earlyInputTime = this.entityMemory(Number)
+    earlyHitTime = this.entityMemory(Number)
+
+    diamondLayout = this.entityMemory(Rect)
+
+    diamondZ = this.entityMemory(Number)
 
     initialize() {
         super.initialize()
-        this.inputTime.min = this.targetTime + this.windows.great.min + input.offset
-        this.inputTime.max = this.targetTime + this.windows.great.max + input.offset
-    }
 
-    updateSequential() {
-        if (time.now < this.inputTime.min) return
+        this.earlyInputTime = this.targetTime + input.offset
+        this.earlyHitTime = -9999
 
-        claimStart(this.info.index, this.targetTime, this.hitbox, this.fullHitbox)
-    }
-
-    setLayout({ l, r }: { l: number; r: number }): void {
-        super.setLayout({ l, r })
-
-        const b = 1 + note.h
-        const t = 1 - note.h
-
-        if (this.useFallbackTickSprite) {
-            const l = this.data.lane - this.data.size
-            const r = this.data.lane + this.data.size
-
-            perspectiveLayout({ l, r, b, t }).copyTo(this.tickSpriteLayout)
-        } else {
+        if (!this.useFallbackSprites) {
             const w = note.h / scaledScreen.wToH
 
             new Rect({
                 l: this.data.lane - w,
                 r: this.data.lane + w,
-                b,
-                t,
-            })
-                .toQuad()
-                .copyTo(this.tickSpriteLayout)
+                b: 1 + note.h,
+                t: 1 - note.h,
+            }).copyTo(this.diamondLayout)
+
+            this.diamondZ = getZ(layer.note.tick, this.targetTime, this.data.lane)
         }
     }
 
-    get useFallbackTickSprite() {
-        return !this.tickSprites.tick.exists
-    }
-    globalPreprocess() {
-        super.globalPreprocess()
-        this.life.miss = -40
+    touch() {
+        if (time.now < this.inputTime.min) return
+
+        if (time.now < this.earlyInputTime) {
+            this.earlyTouch()
+        } else {
+            this.lateTouch()
+        }
     }
 
-    touch() {
+    updateParallel() {
+        this.triggerEarlyTouch()
+
+        super.updateParallel()
+    }
+
+    earlyTouch() {
         for (const touch of touches) {
-            if (touch.started && time.now < this.inputTime.min) continue
-            if (!touch.started && time.now < this.targetTime) continue
-            if (touch.started && !canTraceStart(touch)) continue
             if (!this.fullHitbox.contains(touch.position)) continue
 
-            this.complete(touch)
+            disallowEmpty(touch)
+            this.earlyHitTime = touch.time
             return
         }
     }
 
-    render(): void {
-        if (!options.showNotes) return
-        super.render()
+    lateTouch() {
+        for (const touch of touches) {
+            if (!this.fullHitbox.contains(touch.position)) continue
 
-        if (this.useFallbackTickSprite) {
-            this.tickSprites.fallback.draw(this.tickSpriteLayout.mul(this.y), this.z + 1, 1)
-        } else {
-            this.tickSprites.tick.draw(this.tickSpriteLayout.mul(this.y), this.z + 1, 1)
+            disallowEmpty(touch)
+            this.complete(Math.max(touch.time, this.targetTime))
+            return
         }
     }
 
-    complete(touch: Touch) {
-        disallowEmpty(touch)
-        disallowTraceStart(touch)
-        // disallowEnd(touch, this.inputTime.max)
+    triggerEarlyTouch() {
+        if (this.despawn) return
+        if (time.now < this.earlyInputTime) return
+        if (this.earlyHitTime === -9999) return
 
-        this.result.judgment = Judgment.Perfect
-        this.result.accuracy = 0
+        this.complete(this.earlyHitTime)
+        this.despawn = true
+    }
+
+    render() {
+        super.render()
+
+        if (!this.useFallbackSprites) {
+            this.tickSprites.tick.draw(this.diamondLayout.mul(this.y), this.diamondZ, 1)
+        }
+    }
+
+    complete(hitTime: number) {
+        this.result.judgment = input.judge(hitTime, this.targetTime, this.windows)
+        this.result.accuracy = hitTime - this.targetTime
 
         this.result.bucket.index = this.bucket.index
         this.result.bucket.value = this.result.accuracy * 1000
 
-        this.playHitEffects(touch.startTime)
+        this.playHitEffects(time.now)
 
         this.despawn = true
+    }
+
+    get useFallbackSprites() {
+        return (
+            !this.sprites.left.exists ||
+            !this.sprites.middle.exists ||
+            !this.sprites.right.exists ||
+            !this.tickSprites.tick.exists
+        )
     }
 }

@@ -2,7 +2,7 @@ import { SlideTickNote } from './SlideTickNote.mjs'
 import { getAttached } from './utils.mjs'
 
 export class IgnoredSlideTickNote extends SlideTickNote {
-    attachedSlideTickData = this.defineData({
+    attachedSlideTickData = this.defineImport({
         attachRef: { name: 'attach', type: Number },
     })
 

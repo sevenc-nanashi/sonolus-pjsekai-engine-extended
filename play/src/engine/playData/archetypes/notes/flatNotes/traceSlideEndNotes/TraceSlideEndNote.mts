@@ -30,7 +30,7 @@ export abstract class TraceSlideEndNote extends SlimNote {
 
     bucket = buckets.normalTraceNote
 
-    slideEndData = this.defineData({
+    slideEndData = this.defineImport({
         slideRef: { name: 'slide', type: Number },
     })
 

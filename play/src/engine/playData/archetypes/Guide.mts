@@ -15,7 +15,7 @@ import {
 export class Guide extends Archetype {
     leniency = 1
 
-    data = this.defineData({
+    data = this.defineImport({
         startLane: { name: 'startLane', type: Number },
         startSize: { name: 'startSize', type: Number },
         startBeat: { name: 'startBeat', type: Number },

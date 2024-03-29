@@ -1,7 +1,7 @@
 import { timeToScaledTime } from '../timeScale.mjs'
 
 export class TimeScaleGroup extends Archetype {
-    data = this.defineData({
+    data = this.defineImport({
         firstRef: { name: 'first', type: Number },
         length: { name: 'length', type: Number },
     })

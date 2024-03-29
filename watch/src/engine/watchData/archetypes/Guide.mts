@@ -8,7 +8,7 @@ import { getZwithLayer, layer, skin } from '../skin.mjs'
 import { scaledTimeToEarliestTime, timeToScaledTime } from './timeScale.mjs'
 
 export class Guide extends Archetype {
-    data = this.defineData({
+    data = this.defineImport({
         startLane: { name: 'startLane', type: Number },
         startSize: { name: 'startSize', type: Number },
         startBeat: { name: 'startBeat', type: Number },

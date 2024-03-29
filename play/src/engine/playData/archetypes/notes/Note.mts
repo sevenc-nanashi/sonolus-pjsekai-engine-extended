@@ -6,7 +6,7 @@ export abstract class Note extends Archetype {
 
     abstract leniency: number
 
-    data = this.defineData({
+    data = this.defineImport({
         beat: { name: EngineArchetypeDataName.Beat, type: Number },
         lane: { name: 'lane', type: Number },
         size: { name: 'size', type: Number },

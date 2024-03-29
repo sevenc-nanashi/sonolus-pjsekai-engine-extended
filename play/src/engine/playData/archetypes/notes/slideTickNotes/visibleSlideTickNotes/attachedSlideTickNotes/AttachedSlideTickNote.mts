@@ -2,7 +2,7 @@ import { getAttached } from '../../utils.mjs'
 import { VisibleSlideTickNote } from '../VisibleSlideTickNote.mjs'
 
 export abstract class AttachedSlideTickNote extends VisibleSlideTickNote {
-    attachedSlideTickData = this.defineData({
+    attachedSlideTickData = this.defineImport({
         attachRef: { name: 'attach', type: Number },
         timeScaleGroup: { name: 'timeScaleGroup', type: Number },
     })
