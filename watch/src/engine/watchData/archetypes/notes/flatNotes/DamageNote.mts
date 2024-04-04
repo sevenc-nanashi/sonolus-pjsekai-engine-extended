@@ -1,38 +1,44 @@
+import { effect } from '~/engine/watchData/effect.mjs'
+import { particle } from '~/engine/watchData/particle.mjs'
 import { approach } from '../../../../../../../shared/src/engine/data/note.mjs'
 import { perspectiveLayout } from '../../../../../../../shared/src/engine/data/utils.mjs'
 import { options } from '../../../../configuration/options.mjs'
 import { note } from '../../../note.mjs'
 import { getZ, layer, skin } from '../../../skin.mjs'
+import { archetypes } from '../../index.mjs'
 import { scaledTimeToEarliestTime, timeToScaledTime } from '../../timeScale.mjs'
-import { Note } from '../Note.mjs'
+import { FlatNote } from './FlatNote.mjs'
 
-export class DamageNote extends Note {
+export class DamageNote extends FlatNote {
     sprites = {
         left: skin.sprites.damageNoteLeft,
         middle: skin.sprites.damageNoteMiddle,
         right: skin.sprites.damageNoteRight,
         fallback: skin.sprites.damageNoteFallback,
     }
-
-    visualTime = this.entityMemory({
-        min: Number,
-        max: Number,
-        hidden: Number,
+    damageImport = this.defineImport({
+        hitTime: { name: 'hitTime', type: Number },
     })
 
-    initialized = this.entityMemory(Boolean)
+    clips = {
+        perfect: effect.clips.normalGood,
+    }
 
-    spriteLayouts = this.entityMemory({
-        left: Quad,
-        middle: Quad,
-        right: Quad,
-    })
-    z = this.entityMemory(Number)
+    effects = {
+        circular: particle.effects.damageNoteCircular,
+        linear: particle.effects.damageNoteLinear,
+    }
 
-    y = this.entityMemory(Number)
+    get slotEffect() {
+        return archetypes.NormalSlotEffect
+    }
+
+    get slotGlowEffect() {
+        return archetypes.NormalSlotGlowEffect
+    }
 
     globalPreprocess() {
-        this.life.miss = -80
+        this.life.miss = -40
     }
 
     preprocess() {
@@ -40,6 +46,10 @@ export class DamageNote extends Note {
 
         this.visualTime.max = timeToScaledTime(this.targetTime, this.data.timeScaleGroup)
         this.visualTime.min = this.visualTime.max - note.duration
+
+        if (options.sfxEnabled) {
+            this.scheduleReplaySfx()
+        }
     }
 
     spawnTime() {
@@ -53,24 +63,11 @@ export class DamageNote extends Note {
         )
     }
 
-    despawnTime() {
-        return this.targetTime
-    }
-
     initialize() {
         if (this.initialized) return
         this.initialized = true
 
         this.globalInitialize()
-    }
-
-    updateParallel() {
-        if (this.data.size < 0.125) return
-        const scaledTime = timeToScaledTime(time.now, this.data.timeScaleGroup)
-        if (options.hidden > 0 && scaledTime > this.visualTime.hidden) return
-        if (scaledTime < this.visualTime.min) return
-
-        this.render()
     }
 
     get useFallbackSprites() {
@@ -117,5 +114,11 @@ export class DamageNote extends Note {
             this.sprites.middle.draw(this.spriteLayouts.middle.mul(this.y), this.z, 1)
             this.sprites.right.draw(this.spriteLayouts.right.mul(this.y), this.z, 1)
         }
+    }
+
+    despawnTerminate() {
+        if (replay.isReplay && this.data.judgment) return
+        if (options.noteEffectEnabled) this.playNoteEffects()
+        if (options.laneEffectEnabled) this.playLaneEffects()
     }
 }

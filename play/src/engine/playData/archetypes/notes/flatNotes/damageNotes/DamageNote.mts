@@ -40,6 +40,10 @@ export class DamageNote extends SlimNote {
         linear: particle.effects.damageNoteLinear,
     }
 
+    damageExport = this.defineExport({
+        hitTime: { name: 'hitTime', type: Number },
+    })
+
     get slotEffect() {
         return archetypes.NormalSlotEffect
     }
@@ -79,6 +83,7 @@ export class DamageNote extends SlimNote {
     complete(touch: Touch): void {
         this.result.judgment = Judgment.Miss
         this.result.accuracy = 0
+        this.damageExport("hitTime", touch.startTime)
 
         this.playHitEffects(touch.startTime)
 

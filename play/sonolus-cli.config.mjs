@@ -1,8 +1,8 @@
 import { error, log } from 'node:console'
 import { copyFileSync, readFileSync } from 'node:fs'
-import { hash } from 'sonolus-core'
+import { hash } from '@sonolus/core'
 
-/** @type {import('sonolus.js').SonolusCLIConfig} */
+/** @type {import('@sonolus/sonolus.js').SonolusCLIConfig} */
 export default {
     type: 'play',
 

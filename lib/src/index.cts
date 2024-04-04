@@ -1,4 +1,4 @@
-import { DatabaseEngineItem } from 'sonolus-core'
+import { DatabaseEngineItem } from '@sonolus/core'
 import { Resource } from './Resource.cjs'
 
 export * from 'usctool'

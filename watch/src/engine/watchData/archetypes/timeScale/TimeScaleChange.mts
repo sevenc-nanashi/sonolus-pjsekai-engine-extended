@@ -1,4 +1,4 @@
-import { EngineArchetypeDataName } from 'sonolus-core'
+import { EngineArchetypeDataName } from '@sonolus/core'
 
 export class TimeScaleChange extends Archetype {
     data = this.defineImport({

@@ -1,5 +1,5 @@
 import { resolve } from 'node:path'
-/** @type {import('sonolus.js').SonolusCLIConfig} */
+/** @type {import('@sonolus/sonolus.js').SonolusCLIConfig} */
 export default {
     type: 'preview',
     async esbuild(options) {
