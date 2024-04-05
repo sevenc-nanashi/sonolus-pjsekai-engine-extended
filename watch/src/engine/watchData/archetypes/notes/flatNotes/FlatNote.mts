@@ -69,7 +69,7 @@ export abstract class FlatNote extends Note {
             }
         }
 
-        if (options.slotEffectEnabled && (!replay.isReplay || this.data.judgment)) {
+        if (options.slotEffectEnabled && (replay.isReplay || this.data.judgment)) {
             this.spawnSlotEffects(replay.isReplay ? this.hitTime : this.targetTime)
         }
     }
@@ -83,10 +83,22 @@ export abstract class FlatNote extends Note {
     }
 
     scheduleReplaySfx() {
-        if (this.data.judgment) return
+        if (!this.data.judgment) return
 
         if ('fallback' in this.clips && this.useFallbackClip) {
             this.clips.fallback.schedule(this.hitTime, sfxDistance)
+        } else if ('great' in this.clips && 'good' in this.clips) {
+            switch (this.data.judgment) {
+                case Judgment.Perfect:
+                    this.clips.perfect.schedule(this.hitTime, sfxDistance)
+                    break
+                case Judgment.Great:
+                    this.clips.great.schedule(this.hitTime, sfxDistance)
+                    break
+                case Judgment.Good:
+                    this.clips.good.schedule(this.hitTime, sfxDistance)
+                    break
+            }
         } else {
             this.clips.perfect.schedule(this.hitTime, sfxDistance)
         }
@@ -154,8 +166,8 @@ export abstract class FlatNote extends Note {
         if (options.hidden > 0)
             this.visualTime.hidden = this.visualTime.max - note.duration * options.hidden
 
-        const l = this.data.lane - this.data.size
-        const r = this.data.lane + this.data.size
+        const l = this.data.lane - this.data.size + 0.1
+        const r = this.data.lane + this.data.size - 0.1
 
         const b = 1 + note.h
         const t = 1 - note.h
@@ -163,8 +175,8 @@ export abstract class FlatNote extends Note {
         if (this.useFallbackSprites) {
             perspectiveLayout({ l, r, b, t }).copyTo(this.spriteLayouts.middle)
         } else {
-            const ml = l + 0.3
-            const mr = r - 0.3
+            const ml = l + 0.25
+            const mr = r - 0.25
 
             perspectiveLayout({ l, r: ml, b, t }).copyTo(this.spriteLayouts.left)
             perspectiveLayout({ l: ml, r: mr, b, t }).copyTo(this.spriteLayouts.middle)

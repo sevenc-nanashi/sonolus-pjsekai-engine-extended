@@ -63,7 +63,7 @@ export class DamageNote extends SlimNote {
             if (time.now < this.targetTime) continue
             if (!this.hitbox.contains(touch.position)) continue
 
-            this.complete(touch)
+            this.complete()
             return
         }
     }
@@ -80,12 +80,12 @@ export class DamageNote extends SlimNote {
         }
     }
 
-    complete(touch: Touch): void {
+    complete(): void {
         this.result.judgment = Judgment.Miss
         this.result.accuracy = 0
-        this.damageExport("hitTime", touch.startTime)
+        this.damageExport("hitTime", time.now)
 
-        this.playHitEffects(touch.startTime)
+        this.playHitEffects(time.now)
 
         this.despawn = true
     }
