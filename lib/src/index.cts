@@ -1,4 +1,4 @@
-import { EngineInfo } from 'sonolus-core'
+import { DatabaseEngineItem } from '@sonolus/core'
 import { Resource } from './Resource.cjs'
 
 export * from 'usctool'
@@ -9,7 +9,7 @@ export const version = '1.3.1'
 
 export const engineInfo = {
     name: 'pjsekai',
-    version: 11,
+    version: 12,
     title: {
         en: 'Project Sekai',
         ja: 'プロセカ',
@@ -36,7 +36,7 @@ export const engineInfo = {
             'https://github.com/NonSpicyBurrito/sonolus-pjsekai-engine',
         ].join('\n'),
     },
-} as const satisfies Partial<EngineInfo>
+} as const satisfies Partial<DatabaseEngineItem>
 
 export const engineConfiguration = new Resource('EngineConfiguration')
 export const enginePlayData = new Resource('EnginePlayData')

@@ -1,4 +1,4 @@
-import { ParticleEffectName } from 'sonolus-core'
+import { ParticleEffectName } from '@sonolus/core'
 import { options } from '../configuration/options.mjs'
 import { scaledScreen } from './scaledScreen.mjs'
 
@@ -29,6 +29,9 @@ export const particle = defineParticle({
 
         criticalSlideConnectorCircular: ParticleEffectName.NoteCircularHoldYellow,
         criticalSlideConnectorLinear: ParticleEffectName.NoteLinearHoldYellow,
+
+        damageNoteCircular: ParticleEffectName.NoteCircularTapPurple,
+        damageNoteLinear: ParticleEffectName.NoteLinearTapPurple,
     },
 })
 

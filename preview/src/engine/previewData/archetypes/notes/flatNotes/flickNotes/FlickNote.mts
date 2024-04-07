@@ -12,7 +12,7 @@ export abstract class FlickNote extends FlatNote {
         fallback: SkinSprite
     }
 
-    flickData = this.defineData({
+    flickData = this.defineImport({
         direction: { name: 'direction', type: DataType<FlickDirection> },
     })
 

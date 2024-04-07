@@ -18,7 +18,7 @@ export abstract class TraceFlickNote extends SlimNote {
         fallback: SkinSprite
     }
 
-    flickData = this.defineData({
+    flickData = this.defineImport({
         direction: { name: 'direction', type: DataType<FlickDirection> },
     })
 

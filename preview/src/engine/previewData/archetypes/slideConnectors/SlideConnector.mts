@@ -13,7 +13,7 @@ export abstract class SlideConnector extends Archetype {
 
     abstract zOrder: number
 
-    data = this.defineData({
+    data = this.defineImport({
         headRef: { name: 'head', type: Number },
         tailRef: { name: 'tail', type: Number },
         ease: { name: 'ease', type: DataType<EaseType> },

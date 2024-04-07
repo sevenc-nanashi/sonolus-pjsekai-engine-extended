@@ -1,9 +1,9 @@
-import { EngineArchetypeDataName } from 'sonolus-core'
+import { EngineArchetypeDataName } from '@sonolus/core'
 import { print } from '../print.mjs'
 import { line, skin } from '../skin.mjs'
 
 export class TimeScaleChange extends Archetype {
-    data = this.defineData({
+    data = this.defineImport({
         beat: { name: EngineArchetypeDataName.Beat, type: Number },
         timeScale: { name: 'timeScale', type: Number },
     })

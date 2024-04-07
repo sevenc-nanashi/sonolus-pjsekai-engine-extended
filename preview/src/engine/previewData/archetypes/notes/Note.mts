@@ -1,9 +1,9 @@
-import { EngineArchetypeDataName } from 'sonolus-core'
+import { EngineArchetypeDataName } from '@sonolus/core'
 import { options } from '../../../configuration/options.mjs'
 import { chart } from '../../chart.mjs'
 
 export abstract class Note extends Archetype {
-    data = this.defineData({
+    data = this.defineImport({
         beat: { name: EngineArchetypeDataName.Beat, type: Number },
         lane: { name: 'lane', type: Number },
         size: { name: 'size', type: Number },

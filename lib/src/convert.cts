@@ -3,7 +3,7 @@ import {
     EngineArchetypeName,
     LevelData,
     LevelDataEntity,
-} from 'sonolus-core'
+} from '@sonolus/core'
 import {
     USC,
     USCBpmChange,
@@ -45,7 +45,7 @@ export const uscToLevelData = (usc: USC, offset = 0): LevelData => {
         intermediateToRef.set(intermediate, ref)
 
         const entity = intermediateToEntity.get(intermediate)
-        if (entity) entity.ref = ref
+        if (entity) entity.name = ref
 
         return ref
     }
@@ -69,7 +69,7 @@ export const uscToLevelData = (usc: USC, offset = 0): LevelData => {
         }
 
         const ref = intermediateToRef.get(intermediate)
-        if (ref) entity.ref = ref
+        if (ref) entity.name = ref
 
         intermediateToEntity.set(intermediate, entity)
         entities.push(entity)
@@ -150,7 +150,7 @@ export const uscToLevelData = (usc: USC, offset = 0): LevelData => {
                               ref: `tsc:${tsGroupIndex}:${+index + 1}`,
                           },
                 ],
-                ref: `tsc:${tsGroupIndex}:${index}`,
+                name: `tsc:${tsGroupIndex}:${index}`,
             })
         }
         tsGroupEntities.push({
@@ -174,7 +174,7 @@ export const uscToLevelData = (usc: USC, offset = 0): LevelData => {
                           ref: `tsg:${tsGroupIndex + 1}`,
                       },
             ],
-            ref: `tsg:${tsGroupIndex}`,
+            name: `tsg:${tsGroupIndex}`,
         })
     }
     if (tsGroupIndex === -1) {
@@ -190,7 +190,7 @@ export const uscToLevelData = (usc: USC, offset = 0): LevelData => {
                     value: 0,
                 },
             ],
-            ref: `tsg:0`,
+            name: `tsg:0`,
         })
         entities.push({
             archetype: 'TimeScaleChange',
@@ -208,7 +208,7 @@ export const uscToLevelData = (usc: USC, offset = 0): LevelData => {
                     ref: 'trg:0',
                 },
             ],
-            ref: 'tsc:0:0',
+            name: 'tsc:0:0',
         })
     } else {
         entities.push(...tsGroupEntities)

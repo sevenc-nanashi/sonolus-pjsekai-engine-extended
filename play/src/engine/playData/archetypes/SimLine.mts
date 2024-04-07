@@ -7,7 +7,7 @@ import { Note } from './notes/Note.mjs'
 import { getZ, perspectiveLayout, scaledTimeToEarliestTime, timeToScaledTime } from './utils.mjs'
 
 export class SimLine extends Archetype {
-    data = this.defineData({
+    data = this.defineImport({
         aRef: { name: 'a', type: Number },
         bRef: { name: 'b', type: Number },
     })

@@ -5,7 +5,7 @@ import { getZ, layer, skin } from '../skin.mjs'
 import { archetypes } from './index.mjs'
 
 export class SimLine extends Archetype {
-    data = this.defineData({
+    data = this.defineImport({
         aRef: { name: 'a', type: Number },
         bRef: { name: 'b', type: Number },
     })

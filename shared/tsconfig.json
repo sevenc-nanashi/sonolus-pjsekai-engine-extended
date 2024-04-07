@@ -9,10 +9,10 @@
         "skipLibCheck": true,
         "exactOptionalPropertyTypes": true,
         "forceConsistentCasingInFileNames": true,
+        "baseUrl": ".",
         "paths": {
             "~/*": ["./src/*"],
             "~lib/*": ["../lib/*"]
-
         }
     }
 }

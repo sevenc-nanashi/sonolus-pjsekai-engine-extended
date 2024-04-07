@@ -25,7 +25,7 @@ export abstract class DirectionalTraceFlickNote extends TraceFlickNote {
 
     tickSpriteLayout = this.entityMemory(Quad)
 
-    flickData = this.defineData({
+    flickData = this.defineImport({
         direction: { name: 'direction', type: DataType<FlickDirection> },
     })
 

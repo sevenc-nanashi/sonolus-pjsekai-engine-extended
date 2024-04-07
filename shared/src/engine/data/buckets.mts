@@ -1,11 +1,10 @@
 import { Text } from '@sonolus/core'
-import { skin } from './skin.mjs'
 
-export const buckets = defineBuckets({
+export const createBuckets = (sprites: any) => ({
     normalTapNote: {
         sprites: [
             {
-                id: skin.sprites.normalNoteFallback.id,
+                id: sprites.normalNoteFallback.id,
                 x: 0,
                 y: 0,
                 w: 2,
@@ -18,7 +17,7 @@ export const buckets = defineBuckets({
     normalFlickNote: {
         sprites: [
             {
-                id: skin.sprites.flickNoteFallback.id,
+                id: sprites.flickNoteFallback.id,
                 x: 0,
                 y: 0,
                 w: 2,
@@ -26,7 +25,7 @@ export const buckets = defineBuckets({
                 rotation: -90,
             },
             {
-                id: skin.sprites.flickArrowFallback.id,
+                id: sprites.flickArrowFallback.id,
                 x: 1,
                 y: 0,
                 w: 2,
@@ -39,7 +38,7 @@ export const buckets = defineBuckets({
     normalSlideStartNote: {
         sprites: [
             {
-                id: skin.sprites.normalSlideConnectorFallback.id,
+                id: sprites.normalSlideConnectorFallback.id,
                 x: 0.5,
                 y: 0,
                 w: 2,
@@ -47,7 +46,7 @@ export const buckets = defineBuckets({
                 rotation: -90,
             },
             {
-                id: skin.sprites.slideNoteFallback.id,
+                id: sprites.slideNoteFallback.id,
                 x: -2,
                 y: 0,
                 w: 2,
@@ -60,7 +59,7 @@ export const buckets = defineBuckets({
     normalSlideEndNote: {
         sprites: [
             {
-                id: skin.sprites.normalSlideConnectorFallback.id,
+                id: sprites.normalSlideConnectorFallback.id,
                 x: -0.5,
                 y: 0,
                 w: 2,
@@ -68,7 +67,7 @@ export const buckets = defineBuckets({
                 rotation: -90,
             },
             {
-                id: skin.sprites.slideNoteEndFallback.id,
+                id: sprites.slideNoteEndFallback.id,
                 x: 2,
                 y: 0,
                 w: 2,
@@ -81,7 +80,7 @@ export const buckets = defineBuckets({
     normalSlideEndFlickNote: {
         sprites: [
             {
-                id: skin.sprites.normalSlideConnectorFallback.id,
+                id: sprites.normalSlideConnectorFallback.id,
                 x: -0.5,
                 y: 0,
                 w: 2,
@@ -89,7 +88,7 @@ export const buckets = defineBuckets({
                 rotation: -90,
             },
             {
-                id: skin.sprites.flickNoteFallback.id,
+                id: sprites.flickNoteFallback.id,
                 x: 2,
                 y: 0,
                 w: 2,
@@ -97,7 +96,7 @@ export const buckets = defineBuckets({
                 rotation: -90,
             },
             {
-                id: skin.sprites.flickArrowFallback.id,
+                id: sprites.flickArrowFallback.id,
                 x: 3,
                 y: 0,
                 w: 2,
@@ -111,7 +110,7 @@ export const buckets = defineBuckets({
     criticalTapNote: {
         sprites: [
             {
-                id: skin.sprites.criticalNoteFallback.id,
+                id: sprites.criticalNoteFallback.id,
                 x: 0,
                 y: 0,
                 w: 2,
@@ -124,7 +123,7 @@ export const buckets = defineBuckets({
     criticalFlickNote: {
         sprites: [
             {
-                id: skin.sprites.criticalNoteFallback.id,
+                id: sprites.criticalNoteFallback.id,
                 x: 0,
                 y: 0,
                 w: 2,
@@ -132,7 +131,7 @@ export const buckets = defineBuckets({
                 rotation: -90,
             },
             {
-                id: skin.sprites.criticalArrowFallback.id,
+                id: sprites.criticalArrowFallback.id,
                 x: 1,
                 y: 0,
                 w: 2,
@@ -145,7 +144,7 @@ export const buckets = defineBuckets({
     criticalSlideStartNote: {
         sprites: [
             {
-                id: skin.sprites.criticalSlideConnectorFallback.id,
+                id: sprites.criticalSlideConnectorFallback.id,
                 x: 0.5,
                 y: 0,
                 w: 2,
@@ -153,7 +152,7 @@ export const buckets = defineBuckets({
                 rotation: -90,
             },
             {
-                id: skin.sprites.criticalNoteFallback.id,
+                id: sprites.criticalNoteFallback.id,
                 x: -2,
                 y: 0,
                 w: 2,
@@ -166,7 +165,7 @@ export const buckets = defineBuckets({
     criticalSlideEndNote: {
         sprites: [
             {
-                id: skin.sprites.criticalSlideConnectorFallback.id,
+                id: sprites.criticalSlideConnectorFallback.id,
                 x: -0.5,
                 y: 0,
                 w: 2,
@@ -174,7 +173,7 @@ export const buckets = defineBuckets({
                 rotation: -90,
             },
             {
-                id: skin.sprites.criticalNoteEndFallback.id,
+                id: sprites.criticalNoteEndFallback.id,
                 x: 2,
                 y: 0,
                 w: 2,
@@ -187,7 +186,7 @@ export const buckets = defineBuckets({
     criticalSlideEndFlickNote: {
         sprites: [
             {
-                id: skin.sprites.criticalSlideConnectorFallback.id,
+                id: sprites.criticalSlideConnectorFallback.id,
                 x: -0.5,
                 y: 0,
                 w: 2,
@@ -195,7 +194,7 @@ export const buckets = defineBuckets({
                 rotation: -90,
             },
             {
-                id: skin.sprites.criticalNoteEndFallback.id,
+                id: sprites.criticalNoteEndFallback.id,
                 x: 2,
                 y: 0,
                 w: 2,
@@ -203,7 +202,7 @@ export const buckets = defineBuckets({
                 rotation: -90,
             },
             {
-                id: skin.sprites.criticalArrowFallback.id,
+                id: sprites.criticalArrowFallback.id,
                 x: 3,
                 y: 0,
                 w: 2,
@@ -217,7 +216,7 @@ export const buckets = defineBuckets({
     normalTraceNote: {
         sprites: [
             {
-                id: skin.sprites.normalNoteFallback.id,
+                id: sprites.normalNoteFallback.id,
                 x: 0,
                 y: 0,
                 w: 2,
@@ -228,3 +227,4 @@ export const buckets = defineBuckets({
         unit: Text.MillisecondUnit,
     },
 })
+

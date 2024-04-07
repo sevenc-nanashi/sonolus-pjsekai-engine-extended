@@ -21,6 +21,8 @@ export abstract class FlatNote extends Note {
 
     abstract clips: {
         perfect: EffectClip
+        great?: EffectClip
+        good?: EffectClip
         fallback?: EffectClip
     }
 
@@ -60,31 +62,68 @@ export abstract class FlatNote extends Note {
         this.visualTime.min = this.visualTime.max - note.duration
 
         if (options.sfxEnabled) {
-            if ('fallback' in this.clips && this.useFallbackClip) {
-                this.clips.fallback.schedule(this.targetTime, sfxDistance)
+            if (replay.isReplay) {
+                this.scheduleReplaySfx()
             } else {
-                this.clips.perfect.schedule(this.targetTime, sfxDistance)
+                this.scheduleSfx()
             }
         }
 
-        if (options.slotEffectEnabled) {
-            this.spawnSlotEffects()
+        if (options.slotEffectEnabled && (replay.isReplay || this.data.judgment)) {
+            this.spawnSlotEffects(replay.isReplay ? this.hitTime : this.targetTime)
         }
     }
 
+    scheduleSfx() {
+        if ('fallback' in this.clips && this.useFallbackClip) {
+            this.clips.fallback.schedule(this.targetTime, sfxDistance)
+        } else {
+            this.clips.perfect.schedule(this.targetTime, sfxDistance)
+        }
+    }
+
+    scheduleReplaySfx() {
+        if (!this.data.judgment) return
+
+        if ('fallback' in this.clips && this.useFallbackClip) {
+            this.clips.fallback.schedule(this.hitTime, sfxDistance)
+        } else if ('great' in this.clips && 'good' in this.clips) {
+            switch (this.data.judgment) {
+                case Judgment.Perfect:
+                    this.clips.perfect.schedule(this.hitTime, sfxDistance)
+                    break
+                case Judgment.Great:
+                    this.clips.great.schedule(this.hitTime, sfxDistance)
+                    break
+                case Judgment.Good:
+                    this.clips.good.schedule(this.hitTime, sfxDistance)
+                    break
+            }
+        } else {
+            this.clips.perfect.schedule(this.hitTime, sfxDistance)
+        }
+    }
+
+    get hitTime() {
+        return this.targetTime + this.data.accuracy
+    }
+
     spawnTime() {
-        return scaledTimeToEarliestTime(
-            Math.min(
-                this.visualTime.min,
-                this.visualTime.max,
-                timeToScaledTime(this.targetTime, this.data.timeScaleGroup)
-            ),
-            this.data.timeScaleGroup
+        return Math.min(
+            replay.isReplay ? this.hitTime : this.targetTime,
+            scaledTimeToEarliestTime(
+                Math.min(
+                    this.visualTime.min,
+                    this.visualTime.max,
+                    timeToScaledTime(this.targetTime, this.data.timeScaleGroup)
+                ),
+                this.data.timeScaleGroup
+            )
         )
     }
 
     despawnTime() {
-        return this.targetTime
+        return replay.isReplay ? this.hitTime : this.targetTime
     }
 
     initialize() {
@@ -116,15 +155,19 @@ export abstract class FlatNote extends Note {
     }
 
     get useFallbackClip() {
-        return !this.clips.perfect.exists
+        return (
+            !this.clips.perfect.exists ||
+            ('great' in this.clips && !this.clips.great.exists) ||
+            ('good' in this.clips && !this.clips.good.exists)
+        )
     }
 
     globalInitialize() {
         if (options.hidden > 0)
             this.visualTime.hidden = this.visualTime.max - note.duration * options.hidden
 
-        const l = this.data.lane - this.data.size
-        const r = this.data.lane + this.data.size
+        const l = this.data.lane - this.data.size + 0.1
+        const r = this.data.lane + this.data.size - 0.1
 
         const b = 1 + note.h
         const t = 1 - note.h
@@ -132,8 +175,8 @@ export abstract class FlatNote extends Note {
         if (this.useFallbackSprites) {
             perspectiveLayout({ l, r, b, t }).copyTo(this.spriteLayouts.middle)
         } else {
-            const ml = l + 0.3
-            const mr = r - 0.3
+            const ml = l + 0.25
+            const mr = r - 0.25
 
             perspectiveLayout({ l, r: ml, b, t }).copyTo(this.spriteLayouts.left)
             perspectiveLayout({ l: ml, r: mr, b, t }).copyTo(this.spriteLayouts.middle)
@@ -160,6 +203,7 @@ export abstract class FlatNote extends Note {
     }
 
     despawnTerminate() {
+        if (replay.isReplay && !this.data.judgment) return
         if (options.noteEffectEnabled) this.playNoteEffects()
         if (options.laneEffectEnabled) this.playLaneEffects()
     }
@@ -205,19 +249,19 @@ export abstract class FlatNote extends Note {
         )
     }
 
-    spawnSlotEffects() {
+    spawnSlotEffects(startTime: number) {
         const start = Math.floor(this.data.lane - this.data.size)
         const end = Math.ceil(this.data.lane + this.data.size)
 
         for (let i = start; i < end; i++) {
             this.slotEffect.spawn({
-                startTime: this.targetTime,
+                startTime,
                 lane: i + 0.5,
             })
         }
 
         this.slotGlowEffect.spawn({
-            startTime: this.targetTime,
+            startTime,
             lane: this.data.lane,
             size: this.data.size,
         })

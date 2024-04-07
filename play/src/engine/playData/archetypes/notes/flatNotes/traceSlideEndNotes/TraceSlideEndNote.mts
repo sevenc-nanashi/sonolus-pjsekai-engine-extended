@@ -9,7 +9,7 @@ import { windows } from '../../../windows.mjs'
 import { SlimNote } from '../SlimNote.mjs'
 
 export abstract class TraceSlideEndNote extends SlimNote {
-    leniency = 0.75
+    leniency = 1
 
     abstract tickSprites: {
         tick: SkinSprite
@@ -30,7 +30,7 @@ export abstract class TraceSlideEndNote extends SlimNote {
 
     bucket = buckets.normalTraceNote
 
-    slideEndData = this.defineData({
+    slideEndData = this.defineImport({
         slideRef: { name: 'slide', type: Number },
     })
 
@@ -113,7 +113,7 @@ export abstract class TraceSlideEndNote extends SlimNote {
         if (time.now < this.targetTime) return
 
         for (const touch of touches) {
-            if (!this.hitbox.contains(touch.position)) continue
+            if (!this.fullHitbox.contains(touch.position)) continue
 
             this.complete(touch)
             return

@@ -14,6 +14,8 @@ export class CriticalSlideStartNote extends FlatNote {
 
     clips = {
         perfect: effect.clips.normalPerfect,
+        great: effect.clips.normalGreat,
+        good: effect.clips.normalGood,
     }
 
     effects = {

@@ -5,7 +5,7 @@ import { FlatNote } from '../FlatNote.mjs'
 export abstract class SlideEndNote extends FlatNote {
     leniency = 1
 
-    slideEndData = this.defineData({
+    slideEndData = this.defineImport({
         slideRef: { name: 'slide', type: Number },
     })
 

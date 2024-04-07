@@ -1,14 +1,16 @@
-import { EngineArchetypeDataName } from 'sonolus-core'
+import { EngineArchetypeDataName } from '@sonolus/core'
 import { options } from '../../../configuration/options.mjs'
 
 export abstract class Note extends Archetype {
     hasInput = true
 
-    data = this.defineData({
+    data = this.defineImport({
         beat: { name: EngineArchetypeDataName.Beat, type: Number },
         lane: { name: 'lane', type: Number },
         size: { name: 'size', type: Number },
         timeScaleGroup: { name: 'timeScaleGroup', type: Number },
+        judgment: { name: EngineArchetypeDataName.Judgment, type: DataType<Judgment> },
+        accuracy: { name: EngineArchetypeDataName.Accuracy, type: Number },
     })
 
     targetTime = this.entityMemory(Number)

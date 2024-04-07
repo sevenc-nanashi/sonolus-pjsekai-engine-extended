@@ -5,7 +5,7 @@ import { getHitbox, timeToScaledTime } from '../../../../utils.mjs'
 import { FlickNote } from '../FlickNote.mjs'
 
 export abstract class SlideEndFlickNote extends FlickNote {
-    slideEndFlickData = this.defineData({
+    slideEndFlickData = this.defineImport({
         slideRef: { name: 'slide', type: Number },
     })
 
