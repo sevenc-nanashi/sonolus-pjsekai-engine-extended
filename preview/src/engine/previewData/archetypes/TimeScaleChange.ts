@@ -1,0 +1,23 @@
+import { EngineArchetypeDataName } from "@sonolus/core";
+import { print } from "../print.js";
+import { line, skin } from "../skin.js";
+
+export class TimeScaleChange extends Archetype {
+  data = this.defineImport({
+    beat: { name: EngineArchetypeDataName.Beat, type: Number },
+    timeScale: { name: "timeScale", type: Number },
+  });
+
+  render() {
+    line(skin.sprites.timeScaleChangeLine, this.data.beat, 0.5);
+
+    print(
+      this.data.timeScale,
+      bpmChanges.at(this.data.beat).time,
+      PrintFormat.TimeScale,
+      "auto",
+      PrintColor.Yellow,
+      "left",
+    );
+  }
+}
