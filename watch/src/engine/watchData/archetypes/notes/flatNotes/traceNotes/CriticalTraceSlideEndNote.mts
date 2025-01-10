@@ -1,33 +1,33 @@
-import { effect } from '../../../../effect.mjs'
-import { particle } from '../../../../particle.mjs'
-import { skin } from '../../../../skin.mjs'
-import { archetypes } from '../../../index.mjs'
-import { TraceNote } from './TraceNote.mjs'
+import { effect } from "../../../../effect.mjs";
+import { particle } from "../../../../particle.mjs";
+import { skin } from "../../../../skin.mjs";
+import { archetypes } from "../../../index.mjs";
+import { TraceNote } from "./TraceNote.mjs";
 
 export class CriticalTraceSlideEndNote extends TraceNote {
-    sprites = {
-        left: skin.sprites.criticalTraceNoteLeft,
-        middle: skin.sprites.criticalTraceNoteMiddle,
-        right: skin.sprites.criticalTraceNoteRight,
-        diamond: skin.sprites.criticalSlideTickNote,
-        fallback: skin.sprites.criticalTraceNoteFallback,
-    }
+  sprites = {
+    left: skin.sprites.criticalTraceNoteLeft,
+    middle: skin.sprites.criticalTraceNoteMiddle,
+    right: skin.sprites.criticalTraceNoteRight,
+    diamond: skin.sprites.criticalSlideTickNote,
+    fallback: skin.sprites.criticalTraceNoteFallback,
+  };
 
-    clips = {
-        perfect: effect.clips.criticalTrace,
-        fallback: effect.clips.normalPerfect,
-    }
+  clips = {
+    perfect: effect.clips.criticalTrace,
+    fallback: effect.clips.normalPerfect,
+  };
 
-    effects = {
-        circular: particle.effects.criticalNoteCircular,
-        linear: particle.effects.criticalNoteLinear,
-    }
+  effects = {
+    circular: particle.effects.criticalNoteCircular,
+    linear: particle.effects.criticalNoteLinear,
+  };
 
-    get slotEffect() {
-        return archetypes.CriticalSlotEffect
-    }
+  get slotEffect() {
+    return archetypes.CriticalSlotEffect;
+  }
 
-    get slotGlowEffect() {
-        return archetypes.CriticalSlotGlowEffect
-    }
+  get slotGlowEffect() {
+    return archetypes.CriticalSlotGlowEffect;
+  }
 }

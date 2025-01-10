@@ -1,17 +1,17 @@
-import { getAttached } from '../../utils.mjs'
-import { VisibleSlideTickNote } from '../VisibleSlideTickNote.mjs'
+import { getAttached } from "../../utils.mjs";
+import { VisibleSlideTickNote } from "../VisibleSlideTickNote.mjs";
 
 export abstract class AttachedSlideTickNote extends VisibleSlideTickNote {
-    attachedSlideTickData = this.defineImport({
-        attachRef: { name: 'attach', type: Number },
-    })
+  attachedSlideTickData = this.defineImport({
+    attachRef: { name: "attach", type: Number },
+  });
 
-    preprocessOrder = 1
-    preprocess() {
-        super.preprocess()
-        ;({ lane: this.data.lane, size: this.data.size } = getAttached(
-            this.attachedSlideTickData.attachRef,
-            this.targetTime,
-        ))
-    }
+  preprocessOrder = 1;
+  preprocess() {
+    super.preprocess();
+    ({ lane: this.data.lane, size: this.data.size } = getAttached(
+      this.attachedSlideTickData.attachRef,
+      this.targetTime,
+    ));
+  }
 }

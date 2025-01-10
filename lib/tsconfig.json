@@ -1,17 +1,15 @@
 {
-    "compilerOptions": {
-        "lib": [
-            "ES2021"
-        ],
-        "target": "ES2021",
-        "module": "Node16",
-        "moduleResolution": "Node16",
-        "strict": true,
-        "skipLibCheck": true,
-        "exactOptionalPropertyTypes": true,
-        "forceConsistentCasingInFileNames": true,
-        "outDir": "../dist",
-        "rootDir": "./src",
-        "declaration": true,
-    }
+  "compilerOptions": {
+    "lib": ["ES2021"],
+    "target": "ES2021",
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "strict": true,
+    "skipLibCheck": true,
+    "exactOptionalPropertyTypes": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "../dist",
+    "rootDir": "./src",
+    "declaration": true
+  }
 }

@@ -1,4 +1,4 @@
 export const chart = previewData({
-    beats: Number,
-    duration: Number,
-})
+  beats: Number,
+  duration: Number,
+});

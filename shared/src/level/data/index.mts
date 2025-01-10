@@ -15,8 +15,7 @@
 // await fs.writeFile('./shared/src/level/data/test.levelData.json', JSON.stringify(data, null, 4))
 // export const data: LevelData = expert
 //
-import { LevelData } from '@sonolus/core'
-import level from './test.json'
+import type { LevelData } from "@sonolus/core";
+import level from "./test.levelData.json";
 
-export const data: LevelData = level
-
+export const data: LevelData = level;

@@ -1,3 +1,3 @@
 export const segment = tutorialMemory({
-    time: Number,
-})
+  time: Number,
+});

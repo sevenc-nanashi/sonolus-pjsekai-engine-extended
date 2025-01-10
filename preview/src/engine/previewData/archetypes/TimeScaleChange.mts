@@ -1,23 +1,23 @@
-import { EngineArchetypeDataName } from '@sonolus/core'
-import { print } from '../print.mjs'
-import { line, skin } from '../skin.mjs'
+import { EngineArchetypeDataName } from "@sonolus/core";
+import { print } from "../print.mjs";
+import { line, skin } from "../skin.mjs";
 
 export class TimeScaleChange extends Archetype {
-    data = this.defineImport({
-        beat: { name: EngineArchetypeDataName.Beat, type: Number },
-        timeScale: { name: 'timeScale', type: Number },
-    })
+  data = this.defineImport({
+    beat: { name: EngineArchetypeDataName.Beat, type: Number },
+    timeScale: { name: "timeScale", type: Number },
+  });
 
-    render() {
-        line(skin.sprites.timeScaleChangeLine, this.data.beat, 0.5)
+  render() {
+    line(skin.sprites.timeScaleChangeLine, this.data.beat, 0.5);
 
-        print(
-            this.data.timeScale,
-            bpmChanges.at(this.data.beat).time,
-            PrintFormat.TimeScale,
-            'auto',
-            PrintColor.Yellow,
-            'left'
-        )
-    }
+    print(
+      this.data.timeScale,
+      bpmChanges.at(this.data.beat).time,
+      PrintFormat.TimeScale,
+      "auto",
+      PrintColor.Yellow,
+      "left",
+    );
+  }
 }

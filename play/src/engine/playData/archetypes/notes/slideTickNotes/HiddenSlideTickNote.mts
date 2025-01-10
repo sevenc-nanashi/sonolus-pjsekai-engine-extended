@@ -1,20 +1,20 @@
-import { options } from '../../../../configuration/options.mjs'
-import { Note } from '../Note.mjs'
+import { options } from "../../../../configuration/options.mjs";
+import { Note } from "../Note.mjs";
 
 export class HiddenSlideTickNote extends Note {
-    hasInput = false
+  hasInput = false;
 
-    leniency = 0
+  leniency = 0;
 
-    preprocess() {
-        if (options.mirror) this.data.lane *= -1
-    }
+  preprocess() {
+    if (options.mirror) this.data.lane *= -1;
+  }
 
-    spawnOrder() {
-        return 100000
-    }
+  spawnOrder() {
+    return 100000;
+  }
 
-    shouldSpawn() {
-        return false
-    }
+  shouldSpawn() {
+    return false;
+  }
 }

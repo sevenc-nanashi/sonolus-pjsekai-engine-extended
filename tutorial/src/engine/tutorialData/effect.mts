@@ -1,11 +1,11 @@
-import { EffectClipName } from '@sonolus/core'
+import { EffectClipName } from "@sonolus/core";
 
 export const effect = defineEffect({
-    clips: {
-        normalPerfect: EffectClipName.Perfect,
+  clips: {
+    normalPerfect: EffectClipName.Perfect,
 
-        flickPerfect: EffectClipName.PerfectAlternative,
+    flickPerfect: EffectClipName.PerfectAlternative,
 
-        normalHold: EffectClipName.Hold,
-    },
-})
+    normalHold: EffectClipName.Hold,
+  },
+});

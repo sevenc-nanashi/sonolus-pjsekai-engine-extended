@@ -1,6 +1,6 @@
-import { skin } from '../../skin.mjs'
-import { SlotGlowEffect } from './SlotGlowEffect.mjs'
+import { skin } from "../../skin.mjs";
+import { SlotGlowEffect } from "./SlotGlowEffect.mjs";
 
 export class SlideSlotGlowEffect extends SlotGlowEffect {
-    sprite = skin.sprites.slideSlotGlow
+  sprite = skin.sprites.slideSlotGlow;
 }

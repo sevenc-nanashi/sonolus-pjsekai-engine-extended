@@ -1,1 +1,1 @@
-export const updateSpawn = () => time.now
+export const updateSpawn = () => time.now;

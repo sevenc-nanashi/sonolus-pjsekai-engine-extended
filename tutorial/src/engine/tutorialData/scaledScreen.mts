@@ -1,3 +1,3 @@
 export const scaledScreen = tutorialData({
-    wToH: Number,
-})
+  wToH: Number,
+});

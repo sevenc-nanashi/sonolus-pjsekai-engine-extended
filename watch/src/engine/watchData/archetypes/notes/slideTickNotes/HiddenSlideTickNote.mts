@@ -1,5 +1,5 @@
-import { SlideTickNote } from './SlideTickNote.mjs'
+import { SlideTickNote } from "./SlideTickNote.mjs";
 
 export class HiddenSlideTickNote extends SlideTickNote {
-    hasInput = false
+  hasInput = false;
 }

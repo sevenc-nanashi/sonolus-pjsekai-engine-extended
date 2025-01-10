@@ -1,65 +1,42 @@
 {
-    "name": "sonolus-pjsekai-engine-extended",
-    "version": "1.2.0",
-    "description": "Extended version of NonSpicyBurrito/sonolus-pjsekai-engine",
-    "author": "NonSpicyBurrito + Nanashi.",
-    "repository": "github:sevenc-nanashi/sonolus-pjsekai-engine-extended",
-    "license": "MIT",
-    "keywords": [
-        "Sonolus"
-    ],
-    "main": "dist/index.cjs",
-    "files": [
-        "dist"
-    ],
-    "scripts": {
-        "dev:play": "sonolus-cli --dev ./play/sonolus-cli.config.mjs",
-        "dev:preview": "sonolus-cli --dev ./preview",
-        "dev:tutorial": "sonolus-cli --dev ./tutorial/sonolus-cli.config.mjs",
-        "dev:watch": "sonolus-cli --dev ./watch",
-        "prebuild": "run-p prebuild:*",
-        "prebuild:lib": "tsc -p ./lib --noEmit && eslint --ext .cts ./lib && eslint --ext .mts ./shared",
-        "prebuild:play": "tsc -p ./play --noEmit && eslint --ext .mts ./play",
-        "prebuild:tutorial": "tsc -p ./tutorial --noEmit && eslint --ext .mts ./tutorial",
-        "prebuild:preview": "tsc -p ./preview --noEmit && eslint --ext .mts ./preview",
-        "prebuild:watch": "tsc -p ./watch --noEmit && eslint --ext .mts ./watch",
-        "build": "run-s build:*",
-        "build:lib": "tsc -p ./lib/tsconfig.json",
-        "build:play": "sonolus-cli --build ./play",
-        "build:tutorial": "sonolus-cli --build ./tutorial",
-        "build:preview": "sonolus-cli --build ./preview",
-        "build:watch": "sonolus-cli --build ./watch",
-        "lint": "run-p lint:*",
-        "lint:lib": "eslint --ext .cts ./lib",
-        "lint:shared": "eslint --ext .mts ./shared",
-        "lint:play": "eslint --ext .mts ./play",
-        "lint:tutorial": "eslint --ext .mts ./tutorial",
-        "lint:preview": "eslint --ext .mts ./preview",
-        "lint:watch": "eslint --ext .mts ./watch",
-        "lint:fix": "run-p lint:fix:*",
-        "lint:fix:lib": "eslint --ext .cts ./lib --fix",
-        "lint:fix:shared": "eslint --ext .mts ./shared --fix",
-        "lint:fix:play": "eslint --ext .mts ./play --fix",
-        "lint:fix:tutorial": "eslint --ext .mts ./tutorial --fix",
-        "lint:fix:preview": "eslint --ext .mts ./preview --fix",
-        "lint:fix:watch": "eslint --ext .mts ./watch --fix"
-    },
-    "dependencies": {
-        "@sonolus/core": "^7.5.0",
-        "usctool": "^0.2.1"
-    },
-    "devDependencies": {
-        "@sonolus/sonolus.js": "^9.4.0",
-        "@types/node": "^16.18.36",
-        "@typescript-eslint/eslint-plugin": "^6.4.0",
-        "@typescript-eslint/parser": "^6.4.0",
-        "eslint": "^8.43.0",
-        "eslint-config-prettier": "^8.8.0",
-        "eslint-plugin-prettier": "^4.2.1",
-        "npm-run-all": "4.1.5",
-        "prettier": "^2.8.8",
-        "prettier-plugin-organize-imports": "^3.2.2",
-        "ts-node": "^10.9.1",
-        "typescript": "~5.1.3"
-    }
+  "name": "sonolus-pjsekai-engine-extended",
+  "version": "1.2.0",
+  "description": "Extended version of NonSpicyBurrito/sonolus-pjsekai-engine",
+  "author": "NonSpicyBurrito + Nanashi.",
+  "repository": "github:sevenc-nanashi/sonolus-pjsekai-engine-extended",
+  "license": "MIT",
+  "keywords": ["Sonolus"],
+  "main": "dist/index.cjs",
+  "files": ["dist"],
+  "scripts": {
+    "dev:play": "sonolus-cli --dev ./play/sonolus-cli.config.mjs",
+    "dev:preview": "sonolus-cli --dev ./preview",
+    "dev:tutorial": "sonolus-cli --dev ./tutorial/sonolus-cli.config.mjs",
+    "dev:watch": "sonolus-cli --dev ./watch",
+    "prebuild": "run-p prebuild:*",
+    "prebuild:lib": "tsc -p ./lib --noEmit && eslint --ext .cts ./lib && eslint --ext .mts ./shared",
+    "prebuild:play": "tsc -p ./play --noEmit && eslint --ext .mts ./play",
+    "prebuild:tutorial": "tsc -p ./tutorial --noEmit && eslint --ext .mts ./tutorial",
+    "prebuild:preview": "tsc -p ./preview --noEmit && eslint --ext .mts ./preview",
+    "prebuild:watch": "tsc -p ./watch --noEmit && eslint --ext .mts ./watch",
+    "build": "run-s build:*",
+    "build:lib": "tsc -p ./lib/tsconfig.json",
+    "build:play": "sonolus-cli --build ./play",
+    "build:tutorial": "sonolus-cli --build ./tutorial",
+    "build:preview": "sonolus-cli --build ./preview",
+    "build:watch": "sonolus-cli --build ./watch",
+    "lint": "biome check",
+    "lint:fix": "biome check --write --unsafe"
+  },
+  "dependencies": {
+    "@sonolus/core": "^7.10.0",
+    "usctool": "^0.4.1"
+  },
+  "devDependencies": {
+    "@sonolus/sonolus.js": "^9.5.2",
+    "@types/node": "^22.10.5",
+    "@biomejs/biome": "1.9.4",
+    "npm-run-all": "4.1.5",
+    "typescript": "~5.7.3"
+  }
 }

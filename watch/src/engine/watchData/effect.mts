@@ -1,31 +1,31 @@
-import { EffectClipName } from '@sonolus/core'
+import { EffectClipName } from "@sonolus/core";
 
 export const effect = defineEffect({
-    clips: {
-        normalPerfect: EffectClipName.Perfect,
-        normalGreat: EffectClipName.Great,
-        normalGood: EffectClipName.Good,
+  clips: {
+    normalPerfect: EffectClipName.Perfect,
+    normalGreat: EffectClipName.Great,
+    normalGood: EffectClipName.Good,
 
-        flickPerfect: EffectClipName.PerfectAlternative,
-        flickGreat: EffectClipName.GreatAlternative,
-        flickGood: EffectClipName.GoodAlternative,
+    flickPerfect: EffectClipName.PerfectAlternative,
+    flickGreat: EffectClipName.GreatAlternative,
+    flickGood: EffectClipName.GoodAlternative,
 
-        normalHold: EffectClipName.Hold,
+    normalHold: EffectClipName.Hold,
 
-        normalTick: 'Sekai Tick',
+    normalTick: "Sekai Tick",
 
-        normalTrace: 'Sekai Normal Trace',
+    normalTrace: "Sekai Normal Trace",
 
-        criticalTap: 'Sekai Critical Tap',
+    criticalTap: "Sekai Critical Tap",
 
-        criticalFlick: 'Sekai Critical Flick',
+    criticalFlick: "Sekai Critical Flick",
 
-        criticalHold: 'Sekai Critical Hold',
+    criticalHold: "Sekai Critical Hold",
 
-        criticalTick: 'Sekai Critical Tick',
+    criticalTick: "Sekai Critical Tick",
 
-        criticalTrace: 'Sekai Critical Trace',
-    },
-})
+    criticalTrace: "Sekai Critical Trace",
+  },
+});
 
-export const sfxDistance = 0.02
+export const sfxDistance = 0.02;

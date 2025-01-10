@@ -1,3 +1,3 @@
 export const hand = tutorialData({
-    position: Vec,
-})
+  position: Vec,
+});

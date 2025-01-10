@@ -1,7 +1,7 @@
-import { Note } from '../Note.mjs'
+import { Note } from "../Note.mjs";
 
 export abstract class SlideTickNote extends Note {
-    globalPreprocess() {
-        if (this.hasInput) this.life.miss = -40
-    }
+  globalPreprocess() {
+    if (this.hasInput) this.life.miss = -40;
+  }
 }
