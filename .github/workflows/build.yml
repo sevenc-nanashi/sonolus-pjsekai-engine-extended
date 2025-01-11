@@ -13,6 +13,9 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
+      - name: Setup pnpm
+        run: |
+          corepack enable
       - name: Setup node
         uses: actions/setup-node@v3
         with:
@@ -20,7 +23,6 @@ jobs:
           cache: pnpm
       - name: Install dependencies
         run: |
-          corepack enable
           pnpm ci
 
       - name: Build lib
