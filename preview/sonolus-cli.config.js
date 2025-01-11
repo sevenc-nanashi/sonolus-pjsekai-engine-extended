@@ -14,9 +14,7 @@ export default {
                 filter: /^~(lib)?\/.*/,
               },
               async (args) => {
-                const path = args.path.startsWith("~lib/")
-                  ? `./lib/${args.path.slice(5).replace(".cjs", ".cts")}`
-                  : `./play/src/${args.path.slice(2).replace(".js", ".mts")}`;
+                const path = `./play/src/${args.path.slice(2).replace(".js", ".ts")}`;
 
                 return {
                   path: resolve(process.cwd(), path),
