@@ -23,7 +23,7 @@ jobs:
           cache: pnpm
       - name: Install dependencies
         run: |
-          pnpm ci
+          pnpm i
 
       - name: Build lib
         run: |
