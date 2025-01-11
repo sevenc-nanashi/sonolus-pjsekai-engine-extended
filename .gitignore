@@ -4,7 +4,6 @@ node_modules
 shared/src/level/bgm.mp3
 
 .dev
-dist
 shared/src/level/data/*.sus
 shared/src/level/data/*.mmws
 shared/src/level/data/*.chs
