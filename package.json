@@ -9,6 +9,7 @@
   "main": "dist/index.js",
   "files": ["dist"],
   "type": "module",
+  "packageManager": "pnpm@9.15.3",
   "scripts": {
     "dev:play": "sonolus-cli --dev ./play/sonolus-cli.config.js",
     "dev:preview": "sonolus-cli --dev ./preview",
