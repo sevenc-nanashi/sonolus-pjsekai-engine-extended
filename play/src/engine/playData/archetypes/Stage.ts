@@ -144,8 +144,8 @@ export class Stage extends Archetype {
     skin.sprites.draw(
       background,
       new Rect({
-        l: scaledScreen.l,
-        r: scaledScreen.r,
+        l: scaledScreen.l * 2,
+        r: scaledScreen.r * 2,
         t: -2,
         b: 2,
       }),
