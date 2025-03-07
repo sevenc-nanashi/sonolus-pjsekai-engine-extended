@@ -9,7 +9,7 @@
   "main": "dist/index.js",
   "files": ["dist"],
   "type": "module",
-  "packageManager": "pnpm@9.15.3",
+  "packageManager": "pnpm@10.6.0",
   "scripts": {
     "dev:play": "sonolus-cli --dev ./play/sonolus-cli.config.js",
     "dev:preview": "sonolus-cli --dev ./preview",
@@ -31,14 +31,14 @@
     "lint:fix": "biome check --write --unsafe"
   },
   "dependencies": {
-    "@sonolus/core": "^7.10.0",
+    "@sonolus/core": "^7.12.0",
     "usctool": "^0.4.1"
   },
   "devDependencies": {
-    "@sonolus/sonolus.js": "^9.5.2",
-    "@types/node": "^22.10.5",
     "@biomejs/biome": "1.9.4",
+    "@sonolus/sonolus.js": "^9.5.4",
+    "@types/node": "^22.13.9",
     "npm-run-all": "4.1.5",
-    "typescript": "~5.7.3"
+    "typescript": "~5.8.2"
   }
 }
