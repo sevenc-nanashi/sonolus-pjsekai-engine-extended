@@ -22,7 +22,7 @@ export class NormalTraceSlideEndNote extends TraceSlideEndNote {
   };
 
   effects = {
-    circular: particle.effects.slideNoteCircular,
-    linear: particle.effects.slideNoteLinear,
+    circular: particle.effects.normalTraceNoteCircular,
+    linear: particle.effects.normalTraceNoteLinear,
   };
 }
