@@ -34,6 +34,12 @@ export const particle = defineParticle({
 
     damageNoteCircular: ParticleEffectName.NoteCircularTapPurple,
     damageNoteLinear: ParticleEffectName.NoteLinearTapPurple,
+
+    normalTraceNoteCircular: 'Sekai Trace Note Circular Green',
+    normalTraceNoteLinear: 'Sekai Trace Note Linear Green',
+
+    criticalTraceNoteCircular: 'Sekai Trace Note Circular Yellow',
+    criticalTraceNoteLinear: 'Sekai Trace Note Linear Yellow',
   },
 });
 
