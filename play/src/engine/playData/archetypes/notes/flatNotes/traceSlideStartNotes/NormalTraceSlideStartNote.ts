@@ -23,8 +23,8 @@ export class NormalTraceSlideStartNote extends TraceSlideStartNote {
   };
 
   effects = {
-    circular: particle.effects.slideNoteCircular,
-    linear: particle.effects.slideNoteLinear,
+    circular: particle.effects.normalTraceNoteCircular,
+    linear: particle.effects.normalTraceNoteLinear,
   };
 
   get slotEffect() {
