@@ -24,8 +24,8 @@ export class NormalTraceNote extends TraceNote {
   };
 
   effects = {
-    circular: particle.effects.slideNoteCircular,
-    linear: particle.effects.slideNoteLinear,
+    circular: particle.effects.normalTraceNoteCircular,
+    linear: particle.effects.normalTraceNoteLinear,
   };
 
   windows = windows.tapNote.normal;
