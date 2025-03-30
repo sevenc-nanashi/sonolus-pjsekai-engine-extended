@@ -1,7 +1,8 @@
+import { buckets } from "../../../../buckets.js";
 import { effect } from "../../../../effect.js";
 import { particle } from "../../../../particle.js";
 import { skin } from "../../../../skin.js";
-import { archetypes } from "../../../index.js";
+import { windows } from "../../../windows.js";
 import { TraceNote } from "./TraceNote.js";
 
 export class CriticalTraceNote extends TraceNote {
@@ -9,8 +10,12 @@ export class CriticalTraceNote extends TraceNote {
     left: skin.sprites.criticalTraceNoteLeft,
     middle: skin.sprites.criticalTraceNoteMiddle,
     right: skin.sprites.criticalTraceNoteRight,
-    diamond: skin.sprites.criticalSlideTickNote,
-    fallback: skin.sprites.criticalTraceNoteFallback,
+    fallback: skin.sprites.criticalNoteFallback,
+  };
+
+  tickSprites = {
+    tick: skin.sprites.criticalSlideTickNote,
+    fallback: skin.sprites.criticalSlideTickNoteFallback,
   };
 
   clips = {
@@ -19,15 +24,11 @@ export class CriticalTraceNote extends TraceNote {
   };
 
   effects = {
-    circular: particle.effects.criticalNoteCircular,
-    linear: particle.effects.criticalNoteLinear,
+    circular: particle.effects.criticalTraceNoteCircular,
+    linear: particle.effects.criticalTraceNoteLinear,
   };
 
-  get slotEffect() {
-    return archetypes.CriticalSlotEffect;
-  }
+  windows = windows.tapNote.critical;
 
-  get slotGlowEffect() {
-    return archetypes.CriticalSlotGlowEffect;
-  }
+  bucket = buckets.criticalTapNote;
 }
