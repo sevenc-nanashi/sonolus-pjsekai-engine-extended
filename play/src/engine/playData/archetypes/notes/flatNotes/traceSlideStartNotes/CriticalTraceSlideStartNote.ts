@@ -23,8 +23,8 @@ export class CriticalTraceSlideStartNote extends TraceSlideStartNote {
   };
 
   effects = {
-    circular: particle.effects.criticalNoteCircular,
-    linear: particle.effects.criticalNoteLinear,
+    circular: particle.effects.criticalTraceNoteCircular,
+    linear: particle.effects.criticalTraceNoteLinear,
   };
 
   get slotEffect() {
