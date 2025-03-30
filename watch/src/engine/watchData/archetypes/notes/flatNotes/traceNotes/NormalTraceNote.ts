@@ -1,7 +1,8 @@
-import { effect } from "../../../../effect.js";
-import { particle } from "../../../../particle.js";
-import { skin } from "../../../../skin.js";
-import { archetypes } from "../../../index.js";
+import { windows } from "~/engine/playData/archetypes/windows.js";
+import { buckets } from "~/engine/playData/buckets.js";
+import { effect } from "~/engine/playData/effect.js";
+import { particle } from "~/engine/playData/particle.js";
+import { skin } from "~/engine/playData/skin.js";
 import { TraceNote } from "./TraceNote.js";
 
 export class NormalTraceNote extends TraceNote {
@@ -9,8 +10,12 @@ export class NormalTraceNote extends TraceNote {
     left: skin.sprites.normalTraceNoteLeft,
     middle: skin.sprites.normalTraceNoteMiddle,
     right: skin.sprites.normalTraceNoteRight,
-    diamond: skin.sprites.normalSlideTickNote,
-    fallback: skin.sprites.normalTraceNoteFallback,
+    fallback: skin.sprites.slideNoteFallback,
+  };
+
+  tickSprites = {
+    tick: skin.sprites.normalSlideTickNote,
+    fallback: skin.sprites.normalSlideTickNoteFallback,
   };
 
   clips = {
@@ -19,15 +24,11 @@ export class NormalTraceNote extends TraceNote {
   };
 
   effects = {
-    circular: particle.effects.slideNoteCircular,
-    linear: particle.effects.slideNoteLinear,
+    circular: particle.effects.normalTraceNoteCircular,
+    linear: particle.effects.normalTraceNoteLinear,
   };
 
-  get slotEffect() {
-    return archetypes.SlideSlotEffect;
-  }
+  windows = windows.tapNote.normal;
 
-  get slotGlowEffect() {
-    return archetypes.SlideSlotGlowEffect;
-  }
+  bucket = buckets.normalTraceNote;
 }
