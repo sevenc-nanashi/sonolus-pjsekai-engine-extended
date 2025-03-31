@@ -20,7 +20,9 @@ export class CriticalTraceNote extends TraceNote {
 
   effects = {
     circular: particle.effects.criticalTraceNoteCircular,
+    circularFallback: particle.effects.criticalSlideTickNote,
     linear: particle.effects.criticalTraceNoteLinear,
+    linearFallback: particle.effects.criticalNoteLinear,
   };
 
   get slotEffect() {
