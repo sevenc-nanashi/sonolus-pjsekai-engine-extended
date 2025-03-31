@@ -1,20 +1,16 @@
-import { effect } from "~/engine/playData/effect.js";
-import { particle } from "~/engine/playData/particle.js";
-import { skin } from "~/engine/playData/skin.js";
+import { effect } from "../../../../effect.js";
+import { particle } from "../../../../particle.js";
+import { skin } from "../../../../skin.js";
 import { archetypes } from "../../../index.js";
-import { TraceSlideStartNote } from "./TraceSlideStartNote.js";
+import { TraceNote } from "./TraceNote.js";
 
-export class NormalTraceSlideStartNote extends TraceSlideStartNote {
+export class NormalSlideTraceNote extends TraceNote {
   sprites = {
     left: skin.sprites.normalTraceNoteLeft,
     middle: skin.sprites.normalTraceNoteMiddle,
     right: skin.sprites.normalTraceNoteRight,
-    fallback: skin.sprites.slideNoteFallback,
-  };
-
-  tickSprites = {
-    tick: skin.sprites.normalSlideTickNote,
-    fallback: skin.sprites.normalSlideTickNoteFallback,
+    diamond: skin.sprites.normalSlideTickNote,
+    fallback: skin.sprites.normalTraceNoteFallback,
   };
 
   clips = {
@@ -26,7 +22,7 @@ export class NormalTraceSlideStartNote extends TraceSlideStartNote {
     circular: particle.effects.normalTraceNoteCircular,
     circularFallback: particle.effects.normalSlideTickNote,
     linear: particle.effects.normalTraceNoteLinear,
-    linearFallback: particle.effects.slideNoteLinear,
+    linearFallback: particle.effects.normalNoteLinear,
   };
 
   get slotEffect() {
