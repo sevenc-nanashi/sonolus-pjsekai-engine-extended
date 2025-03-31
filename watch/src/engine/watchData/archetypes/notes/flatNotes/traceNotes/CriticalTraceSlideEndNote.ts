@@ -1,19 +1,16 @@
-import { effect } from "~/engine/playData/effect.js";
-import { particle } from "~/engine/playData/particle.js";
-import { skin } from "~/engine/playData/skin.js";
-import { TraceSlideEndNote } from "./TraceSlideEndNote.js";
+import { effect } from "../../../../effect.js";
+import { particle } from "../../../../particle.js";
+import { skin } from "../../../../skin.js";
+import { archetypes } from "../../../index.js";
+import { TraceNote } from "./TraceNote.js";
 
-export class CriticalTraceSlideEndNote extends TraceSlideEndNote {
+export class CriticalTraceSlideEndNote extends TraceNote {
   sprites = {
     left: skin.sprites.criticalTraceNoteLeft,
     middle: skin.sprites.criticalTraceNoteMiddle,
     right: skin.sprites.criticalTraceNoteRight,
-    fallback: skin.sprites.criticalNoteFallback,
-  };
-
-  tickSprites = {
-    tick: skin.sprites.criticalSlideTickNote,
-    fallback: skin.sprites.criticalSlideTickNoteFallback,
+    diamond: skin.sprites.criticalSlideTickNote,
+    fallback: skin.sprites.criticalTraceNoteFallback,
   };
 
   clips = {
@@ -27,4 +24,12 @@ export class CriticalTraceSlideEndNote extends TraceSlideEndNote {
     linear: particle.effects.criticalTraceNoteLinear,
     linearFallback: particle.effects.criticalNoteLinear,
   };
+
+  get slotEffect() {
+    return archetypes.CriticalSlotEffect;
+  }
+
+  get slotGlowEffect() {
+    return archetypes.CriticalSlotGlowEffect;
+  }
 }
