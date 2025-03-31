@@ -1,19 +1,16 @@
-import { effect } from "~/engine/playData/effect.js";
-import { particle } from "~/engine/playData/particle.js";
-import { skin } from "~/engine/playData/skin.js";
-import { TraceSlideEndNote } from "./TraceSlideEndNote.js";
+import { effect } from "../../../../effect.js";
+import { particle } from "../../../../particle.js";
+import { skin } from "../../../../skin.js";
+import { archetypes } from "../../../index.js";
+import { TraceNote } from "./TraceNote.js";
 
-export class NormalTraceSlideEndNote extends TraceSlideEndNote {
+export class NormalTraceSlideEndNote extends TraceNote {
   sprites = {
     left: skin.sprites.normalTraceNoteLeft,
     middle: skin.sprites.normalTraceNoteMiddle,
     right: skin.sprites.normalTraceNoteRight,
-    fallback: skin.sprites.slideNoteFallback,
-  };
-
-  tickSprites = {
-    tick: skin.sprites.normalSlideTickNote,
-    fallback: skin.sprites.normalSlideTickNoteFallback,
+    diamond: skin.sprites.normalSlideTickNote,
+    fallback: skin.sprites.normalTraceNoteFallback,
   };
 
   clips = {
@@ -25,6 +22,14 @@ export class NormalTraceSlideEndNote extends TraceSlideEndNote {
     circular: particle.effects.normalTraceNoteCircular,
     circularFallback: particle.effects.normalSlideTickNote,
     linear: particle.effects.normalTraceNoteLinear,
-    linearFallback: particle.effects.slideNoteLinear,
+    linearFallback: particle.effects.normalNoteLinear,
   };
+
+  get slotEffect() {
+    return archetypes.SlideSlotEffect;
+  }
+
+  get slotGlowEffect() {
+    return archetypes.SlideSlotGlowEffect;
+  }
 }
