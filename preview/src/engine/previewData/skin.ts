@@ -124,8 +124,9 @@ export const layer = {
   note: {
     arrow: 101,
     body: 100,
-    connector: 99,
-    guide: 98,
+    trace: 99,
+    slide: 98,
+    connector: 97,
   },
 
   simLine: 90,

@@ -48,6 +48,8 @@ export abstract class FlatNote extends Note {
 
   abstract bucket: Bucket;
 
+  layer = layer.note.body;
+
   scheduleSFXTime = this.entityMemory(Number);
 
   visualTime = this.entityMemory({
@@ -124,7 +126,7 @@ export abstract class FlatNote extends Note {
 
     this.setLayout({ l, r });
 
-    this.z = getZ(layer.note.body, this.targetTime, this.data.lane);
+    this.z = getZ(this.layer, this.targetTime, this.data.lane);
 
     this.result.accuracy = this.windows.good.max;
   }

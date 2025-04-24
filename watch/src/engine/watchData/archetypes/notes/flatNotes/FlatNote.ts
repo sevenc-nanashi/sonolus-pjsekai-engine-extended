@@ -41,6 +41,8 @@ export abstract class FlatNote extends Note {
   abstract slotEffect: SlotEffect;
   abstract slotGlowEffect: SlotGlowEffect;
 
+  layer = layer.note.body;
+
   visualTime = this.entityMemory({
     min: Number,
     max: Number,
@@ -198,7 +200,7 @@ export abstract class FlatNote extends Note {
       perspectiveLayout({ l: mr, r, b, t }).copyTo(this.spriteLayouts.right);
     }
 
-    this.z = getZ(layer.note.body, this.targetTime, this.data.lane);
+    this.z = getZ(this.layer, this.targetTime, this.data.lane);
   }
 
   render() {

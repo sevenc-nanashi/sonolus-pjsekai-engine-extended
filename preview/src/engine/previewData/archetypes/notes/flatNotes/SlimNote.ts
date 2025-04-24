@@ -11,11 +11,13 @@ export abstract class SlimNote extends Note {
     fallback: SkinSprite;
   };
 
+layer = layer.note.body;
+
   render() {
     const time = bpmChanges.at(this.data.beat).time;
     const pos = panel.getPos(time);
 
-    const z = getZ(layer.note.body, time, this.data.lane);
+    const z = getZ(this.layer, time, this.data.lane);
 
     const l = this.data.lane - this.data.size;
     const r = this.data.lane + this.data.size;
