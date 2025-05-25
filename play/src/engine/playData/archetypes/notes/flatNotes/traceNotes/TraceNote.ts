@@ -4,6 +4,7 @@ import { scaledScreen } from "~/engine/playData/archetypes/shared.js";
 import { layer } from "../../../layer.js";
 import { getZ } from "../../../utils.js";
 import { FlatNote } from "../FlatNote.js";
+import { flatEffectLayout, particle } from "../../../../particle.js";
 
 export abstract class TraceNote extends FlatNote {
   abstract sprites: {
@@ -115,6 +116,15 @@ export abstract class TraceNote extends FlatNote {
     this.playHitEffects(time.now);
 
     this.despawn = true;
+  }
+
+  playCircularNoteEffect() {
+    particle.effects.spawn(
+      this.circularEffectId,
+      flatEffectLayout({ lane: this.data.lane }),
+      0.6,
+      false
+    )
   }
 
   get useFallbackSprites() {
