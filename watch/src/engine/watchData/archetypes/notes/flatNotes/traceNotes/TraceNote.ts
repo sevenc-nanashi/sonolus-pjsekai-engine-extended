@@ -1,3 +1,4 @@
+import { particle, flatEffectLayout } from "../../../../particle.js";
 import { note } from "../../../../note.js";
 import { scaledScreen } from "../../../../scaledScreen.js";
 import { getZ, layer } from "../../../../skin.js";
@@ -52,6 +53,15 @@ export abstract class TraceNote extends FlatNote {
         1,
       );
     }
+  }
+
+  playCircularNoteEffect() {
+    particle.effects.spawn(
+      this.circularEffectId,
+      flatEffectLayout({ lane: this.data.lane }),
+      0.6,
+      false
+    )
   }
 
   spawnSlotEffects() {

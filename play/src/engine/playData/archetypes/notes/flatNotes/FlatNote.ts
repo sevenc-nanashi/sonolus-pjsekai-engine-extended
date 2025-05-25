@@ -33,7 +33,9 @@ export abstract class FlatNote extends Note {
 
   abstract effects: {
     circular: ParticleEffect;
+    circularFallback?: ParticleEffect;
     linear: ParticleEffect;
+    linearFallback?: ParticleEffect;
   };
 
   get slotEffect(): SlotEffect | undefined {
@@ -187,6 +189,18 @@ export abstract class FlatNote extends Note {
       ("great" in this.clips && !this.clips.great.exists) ||
       ("good" in this.clips && !this.clips.good.exists)
     );
+  }
+
+  get circularEffectId() {
+    return 'circularFallback' in this.effects && !this.effects.circular.exists
+      ? this.effects.circularFallback.id
+      : this.effects.circular.id
+  }
+
+  get linearEffectId() {
+    return 'linearFallback' in this.effects && !this.effects.linear.exists
+      ? this.effects.linearFallback.id
+      : this.effects.linear.id
   }
 
   scheduleSFX() {

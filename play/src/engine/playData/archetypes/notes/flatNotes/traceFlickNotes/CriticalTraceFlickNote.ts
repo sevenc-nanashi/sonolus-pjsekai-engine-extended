@@ -12,7 +12,7 @@ export class CriticalTraceFlickNote extends DirectionalTraceFlickNote {
     right: skin.sprites.criticalTraceNoteRight,
     fallback: skin.sprites.criticalNoteFallback,
   };
-
+ 
   clips = {
     perfect: effect.clips.criticalFlick,
   };

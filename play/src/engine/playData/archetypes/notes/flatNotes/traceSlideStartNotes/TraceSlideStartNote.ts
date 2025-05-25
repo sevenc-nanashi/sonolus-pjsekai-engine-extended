@@ -25,7 +25,9 @@ export abstract class TraceSlideStartNote extends SlimNote {
 
   abstract effects: {
     circular: ParticleEffect;
+    circularFallback: ParticleEffect;
     linear: ParticleEffect;
+    linearFallback: ParticleEffect;
   };
 
   windows = windows.tapNote.normal;
