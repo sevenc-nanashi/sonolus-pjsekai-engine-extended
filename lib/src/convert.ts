@@ -555,6 +555,7 @@ const guide: Handler<USCGuideNote> = (object, append) => {
       data: {
         color: USCColor[object.color],
         fade: USCFade[object.fade],
+        fadepoint: object.fadepoint,
         ease: eases[head.ease],
 
         startLane: start.lane,

@@ -32,6 +32,7 @@ export class Guide extends Archetype {
 
     ease: { name: "ease", type: DataType<EaseType> },
     fade: { name: "fade", type: DataType<FadeType> },
+    fadepoint: { name: "fadepoint", type: Number },
     color: { name: "color", type: DataType<Color> },
   });
   preprocess(): void {
@@ -42,6 +43,16 @@ export class Guide extends Archetype {
   }
 
   render() {
+    // Set default fadepoint if not defined
+    let fadepoint = this.data.fadepoint;
+    if (fadepoint === undefined || fadepoint === null) {
+      if (this.data.fade === FadeType.In) {
+        fadepoint = 20;
+      } else if (this.data.fade === FadeType.Out) {
+        fadepoint = 0;
+      }
+    }
+
     const t = {
       min: bpmChanges.at(this.data.headBeat).time,
       max: bpmChanges.at(this.data.tailBeat).time,
@@ -102,16 +113,34 @@ export class Guide extends Archetype {
           p4: pos.min.translate(Math.lerp(r.min, r.max, s.min), 0),
         });
 
-        const alpha =
-          this.data.fade === FadeType.None
-            ? 0.5
-            : Math.remapClamped(
-                startTime,
-                endTime,
-                this.data.fade === FadeType.In ? 0 : 0.5,
-                this.data.fade === FadeType.In ? 0.5 : 0,
-                st.min,
+        let alpha = 0.5;
+        if (this.data.fade !== FadeType.None) {
+          if (this.data.fade === FadeType.In) {
+            if (j < fadepoint) {
+              alpha = Math.remapClamped(
+                0,
+                fadepoint,
+                0,
+                0.5,
+                j
               );
+            } else {
+              alpha = 0.5;
+            }
+          } else if (this.data.fade === FadeType.Out) {
+            if (j >= fadepoint) {
+              alpha = Math.remapClamped(
+                fadepoint,
+                20,
+                0.5,
+                0,
+                j
+              );
+            } else {
+              alpha = 0.5;
+            }
+          }
+        }
 
         skin.sprites.draw(
           this.useFallbackSprite ? this.fallbackSprite : this.normalSprite,
