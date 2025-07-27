@@ -122,8 +122,10 @@ export const skin = defineSkin({
 
 export const layer = {
   note: {
-    arrow: 101,
-    body: 100,
+    arrow: 103,
+    tick: 102,
+    body: 101,
+    slimBody: 100,
     connector: 99,
     guide: 98,
   },

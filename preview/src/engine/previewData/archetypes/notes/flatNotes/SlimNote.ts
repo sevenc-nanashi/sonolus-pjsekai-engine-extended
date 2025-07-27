@@ -15,7 +15,7 @@ export abstract class SlimNote extends Note {
     const time = bpmChanges.at(this.data.beat).time;
     const pos = panel.getPos(time);
 
-    const z = getZ(layer.note.body, time, this.data.lane);
+    const z = getZ(layer.note.slimBody, time, this.data.lane);
 
     const l = this.data.lane - this.data.size;
     const r = this.data.lane + this.data.size;

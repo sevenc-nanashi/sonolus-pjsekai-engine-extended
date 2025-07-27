@@ -15,7 +15,7 @@ export abstract class TraceNote extends SlimNote {
     const time = bpmChanges.at(this.data.beat).time;
     const pos = panel.getPos(time);
 
-    const z = getZ(layer.note.body, time, this.data.lane) + 1;
+    const z = getZ(layer.note.tick, time, this.data.lane) + 1;
 
     const b = -note.h;
     const t = note.h;
