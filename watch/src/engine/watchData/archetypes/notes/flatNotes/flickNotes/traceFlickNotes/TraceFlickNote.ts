@@ -42,6 +42,12 @@ export abstract class TraceFlickNote extends FlickNote {
     }
   }
 
+  initialize() {
+    super.initialize();
+
+    this.z = getZ(layer.note.slimBody, this.targetTime, this.data.lane);
+  }
+
   render() {
     super.render();
 

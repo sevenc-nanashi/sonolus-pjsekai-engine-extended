@@ -3,11 +3,7 @@ import { skin } from "../../../../skin.js";
 import { note } from "../../../constants.js";
 import { layer } from "../../../layer.js";
 import { scaledScreen } from "../../../shared.js";
-import {
-  getZ,
-  linearEffectLayout,
-  perspectiveLayout,
-} from "../../../utils.js";
+import { getZ, linearEffectLayout, perspectiveLayout } from "../../../utils.js";
 import type { FlickDirection } from "../flickNotes/FlickDirection.js";
 import { TraceFlickNote } from "./TraceFlickNote.js";
 
@@ -114,18 +110,15 @@ export abstract class DirectionalTraceFlickNote extends TraceFlickNote {
     if (!options.showNotes) return;
     super.render();
 
+    const tickZ = getZ(layer.note.tick, this.targetTime, this.data.lane);
     if (this.useFallbackTickSprite) {
       this.tickSprites.fallback.draw(
         this.tickSpriteLayout.mul(this.y),
-        this.z + 1,
+        tickZ,
         1,
       );
     } else {
-      this.tickSprites.tick.draw(
-        this.tickSpriteLayout.mul(this.y),
-        this.z + 1,
-        1,
-      );
+      this.tickSprites.tick.draw(this.tickSpriteLayout.mul(this.y), tickZ, 1);
     }
 
     if (options.markerAnimation) {
