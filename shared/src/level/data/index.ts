@@ -7,7 +7,7 @@ import { anyToUSC } from 'usctool'
 import { uscToLevelData } from '~lib/src/convert.js'
 
 export const data: LevelData = await fs
-    .readFile('./shared/src/level/data/trace.usc')
+    .readFile('./shared/src/level/data/traceFlick.usc')
     .then(anyToUSC)
     .then(({ usc }) => uscToLevelData(usc))
 

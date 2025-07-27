@@ -4,7 +4,8 @@ import { SlimNote } from "../SlimNote.js";
 export abstract class TraceFlickNote extends SlimNote {
   leniency = 1;
 
-  earlyInputTime = this.entityMemory(Number);
+  // not 0: earlyInputTime, 0: done
+  earlyInputTimeOrDone = this.entityMemory(Number);
 
   preprocess() {
     super.preprocess();
@@ -13,19 +14,27 @@ export abstract class TraceFlickNote extends SlimNote {
   initialize() {
     super.initialize();
 
-    this.earlyInputTime = this.targetTime + input.offset;
+    this.earlyInputTimeOrDone = this.targetTime + input.offset;
   }
 
-  complete(touch: Touch) {
+  complete(time: number) {
     this.result.judgment = Judgment.Perfect;
-    this.result.accuracy = touch.time - this.targetTime;
+    this.result.accuracy = time - this.targetTime;
 
     this.result.bucket.index = this.bucket.index;
     this.result.bucket.value = this.result.accuracy * 1000;
 
-    this.playHitEffects(touch.time);
+    this.playHitEffects(time);
 
     this.despawn = true;
+  }
+
+  updateParallel() {
+    super.updateParallel();
+
+    if (this.earlyInputTimeOrDone === 0 && time.now >= this.targetTime) {
+      this.complete(this.targetTime);
+    }
   }
 
   playNoteEffects() {
@@ -33,9 +42,10 @@ export abstract class TraceFlickNote extends SlimNote {
   }
 
   touch() {
+    if (this.earlyInputTimeOrDone === 0) return;
     if (time.now < this.inputTime.min) return;
 
-    if (time.now < this.earlyInputTime) {
+    if (time.now < this.earlyInputTimeOrDone) {
       this.earlyTouch();
     } else {
       this.lateTouch();
@@ -48,7 +58,7 @@ export abstract class TraceFlickNote extends SlimNote {
       if (!this.hitbox.contains(touch.lastPosition)) continue;
       if (!touch.ended && this.hitbox.contains(touch.position)) continue;
 
-      this.complete(touch);
+      this.earlyInputTimeOrDone = 0;
       return;
     }
   }
@@ -58,7 +68,7 @@ export abstract class TraceFlickNote extends SlimNote {
       if (touch.vr < minFlickVR) continue;
       if (!this.hitbox.contains(touch.lastPosition)) continue;
 
-      this.complete(touch);
+      this.complete(touch.time);
       return;
     }
   }
