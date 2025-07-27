@@ -1,8 +1,14 @@
 import { note } from "~/engine/playData/archetypes/constants.js";
-import { perspectiveLayout } from "~/engine/playData/archetypes/utils.js";
+import { getZ, perspectiveLayout } from "~/engine/playData/archetypes/utils.js";
 import { FlatNote } from "./FlatNote.js";
+import { layer } from "../../layer.js";
 
 export abstract class SlimNote extends FlatNote {
+  initialize() {
+    super.initialize();
+
+    this.z = getZ(layer.note.slimBody, this.targetTime, this.data.lane);
+  }
   setLayout({ l, r }: { l: number; r: number }) {
     const fb = 1 + note.h / 2;
     const ft = 1 - note.h / 2;

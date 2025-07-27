@@ -148,9 +148,10 @@ export const layer = {
   slotGlowEffect: 200,
 
   note: {
-    arrow: 102,
-    tick: 101,
-    body: 100,
+    arrow: 103,
+    tick: 102,
+    body: 101,
+    slimBody: 100,
     slide: 99,
     guide: 98,
     connector: 97,

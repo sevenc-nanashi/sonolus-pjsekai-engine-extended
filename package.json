@@ -5,9 +5,13 @@
   "author": "NonSpicyBurrito + Nanashi.",
   "repository": "github:sevenc-nanashi/sonolus-pjsekai-engine-extended",
   "license": "MIT",
-  "keywords": ["Sonolus"],
+  "keywords": [
+    "Sonolus"
+  ],
   "main": "dist/index.js",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "packageManager": "pnpm@10.6.0",
   "scripts": {
@@ -31,14 +35,14 @@
     "lint:fix": "biome check --write --unsafe"
   },
   "dependencies": {
-    "@sonolus/core": "^7.12.0",
+    "@sonolus/core": "^7.13.3",
     "usctool": "^0.4.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
-    "@sonolus/sonolus.js": "^9.5.4",
+    "@biomejs/biome": "2.1.2",
+    "@sonolus/sonolus.js": "^9.5.6",
     "@types/node": "^22.13.9",
     "npm-run-all": "4.1.5",
-    "typescript": "~5.8.2"
+    "typescript": "~5.8.3"
   }
 }

@@ -28,6 +28,11 @@ export abstract class TraceNote extends FlatNote {
   globalInitialize() {
     super.globalInitialize();
 
+    this.z = getZ(
+      layer.note.slimBody,
+      this.targetTime,
+      this.data.lane,
+    );
     if (!this.useFallbackSprites) {
       const w = note.h / scaledScreen.wToH;
 
