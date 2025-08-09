@@ -38,6 +38,7 @@ export class Guide extends Archetype {
 
     ease: { name: "ease", type: DataType<EaseType> },
     fade: { name: "fade", type: DataType<FadeType> },
+    fadepoint: { name: "fadepoint", type: Number },
     color: { name: "color", type: DataType<Color> },
   });
 
@@ -191,6 +192,14 @@ export class Guide extends Archetype {
     if (visibleTime.min >= visibleTime.max) return;
 
     for (let i = 0; i < options.guideQuality; i++) {
+      let fadepoint = this.data.fadepoint;
+      if (fadepoint === undefined || fadepoint === null) {
+        if (this.data.fade === FadeType.In) {
+          fadepoint = options.guideQuality;
+        } else if (this.data.fade === FadeType.Out) {
+          fadepoint = 0;
+        }
+      }
       const scaledTime = {
         min: Math.lerp(
           visibleTime.min,
@@ -225,16 +234,32 @@ export class Guide extends Archetype {
         y4: y.min,
       };
 
-      const alpha =
-        this.data.fade === FadeType.None
-          ? 0.5
-          : Math.remapClamped(
-              this.start.scaledTime,
-              this.end.scaledTime,
-              this.data.fade === FadeType.In ? 0 : 0.5,
-              this.data.fade === FadeType.In ? 0.5 : 0,
-              scaledTime.min,
-            );
+      let alpha = 0.5;
+      if (this.data.fade === FadeType.In) {
+        if (i < fadepoint) {
+          alpha = Math.remapClamped(
+            0,
+            fadepoint,
+            0,
+            0.5,
+            i
+          );
+        } else {
+          alpha = 0.5;
+        }
+      } else if (this.data.fade === FadeType.Out) {
+        if (i >= fadepoint) {
+          alpha = Math.remapClamped(
+            fadepoint,
+            options.guideQuality,
+            0.5,
+            0,
+            i
+          );
+        } else {
+          alpha = 0.5;
+        }
+      }
       if (this.useFallbackSprite) {
         skin.sprites.draw(
           this.sprites.fallback,
